@@ -10,10 +10,10 @@ import java.awt.Color;
  * @author Zach Schwartz
  *
  */
-public class Ball extends GameShape {
+public class Ball extends MoveableShape{
 
-   public Ball(double xPos, double yPos, int width, int height, Color color) {
-      super(xPos, yPos, width, height, color);
+   public Ball(double xPos, double yPos, int width, int height, Color color, int speed) {
+      super(xPos, yPos, width, height, color, speed);
    }
 
 }

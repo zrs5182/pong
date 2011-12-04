@@ -94,4 +94,20 @@ public abstract class GameShape implements Collidable, Drawable{
       xPos += Math.cos(theta);
       yPos += Math.sin(theta);
    }
+   
+   public void setX(double xPos){
+	   this.xPos = xPos;
+   }
+   
+   public void setY(double yPos){
+	   this.yPos = yPos;
+   }
+   
+   public void setWidth(int width){
+	   this.width = width;
+   }
+   
+   public void setHeight(int height){
+	   this.height = height;
+   }
 }

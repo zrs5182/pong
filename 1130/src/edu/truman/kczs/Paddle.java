@@ -8,7 +8,7 @@ import java.awt.Color;
  * @author Zach Schwartz
  *
  */
-public class Paddle extends GameShape {
+public class Paddle extends MoveableShape{
 
    public Paddle(double xPos, double yPos, int width, int height, Color color) {
       super(xPos, yPos, width, height, color);

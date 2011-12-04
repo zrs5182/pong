@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import edu.truman.kczs.Ball;
+import edu.truman.kczs.Direction;
 import edu.truman.kczs.Field;
 import edu.truman.kczs.GoalWall;
 import edu.truman.kczs.Paddle;
@@ -31,6 +32,8 @@ public class KCZS {
 	public static final Color PADDLE1_COLOR = Color.red;
 	public static final Color PADDLE2_COLOR = Color.blue;
 	public static final Color BALL_COLOR = Color.green;
+	
+	public static final int BALL_SPEED = 2;
 
 	
    /**
@@ -52,7 +55,7 @@ public class KCZS {
 	   final Wall botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS, scene.getWidth() ,WALL_THICKNESS, WALL_COLOR);
 	   final Paddle paddle1 = new Paddle(0,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE1_COLOR);
 	   final Paddle paddle2 = new Paddle(scene.getWidth()-WALL_THICKNESS,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE2_COLOR);
-	   final Ball ball = new Ball((scene.getWidth()-WALL_THICKNESS)/2, (scene.getHeight()-WALL_THICKNESS)/2, WALL_THICKNESS, WALL_THICKNESS, BALL_COLOR);
+	   final Ball ball = new Ball((scene.getWidth()-WALL_THICKNESS)/2, (scene.getHeight()-WALL_THICKNESS)/2, WALL_THICKNESS, WALL_THICKNESS, BALL_COLOR, BALL_SPEED);
 	   
 	   scene.add(field);
 	   scene.add(topWall);
@@ -64,12 +67,17 @@ public class KCZS {
 	   ActionListener listener = new
 		         ActionListener() {
 		            public void actionPerformed(ActionEvent event) {
-		               ball.translate(0);
+		               if ((ball.isColliding(paddle2) != Direction.NONE) || (paddle2.isColliding(ball) != Direction.NONE)){
+		            	   ball.setTheta(Math.PI);
+		               } else if ((ball.isColliding(paddle1) != Direction.NONE) || (paddle1.isColliding(ball) != Direction.NONE)){
+		            	   ball.setTheta(0);
+		               }
+		            	ball.translate(ball.getTheta());
 		               scene.repaint();
 		            }
 		      };
 	   
-	   Timer t = new Timer(10, listener);
+	   Timer t = new Timer(5, listener);
 	   t.start();
 	   
    }

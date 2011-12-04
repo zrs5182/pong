@@ -10,12 +10,12 @@ package edu.truman.kczs;
  */
 public interface Moveable {
 	public double getSpeed();
-	public double getAngle();
-	public void setX();
-	public void setY();
-	public void setSpeed();
-	public void setAngle();
-	public void setWidth();
-	public void setHeight();
+	public double getTheta();
+	public void setX(double xPos); // doesn't belong here
+	public void setY(double yPos); // doesn't belong here
+	public void setSpeed(double speed);
+	public void setTheta(double theta);
+	public void setWidth(int width); // doesn't belong here
+	public void setHeight(int height); // doesn't belong here
 	public void translate(double theta);
 }
