@@ -15,7 +15,8 @@ import edu.truman.kczs.Wall;
 
 
 /**
- * @author Kyler Carlson and Zach Schwartz
+ * @author Kyler Carlson
+ * @author Zach Schwartz
  *
  */
 public class KCZS {
