@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.truman.kczs;
+
 
 /**
  * @author Kyler Carlson and Zach Schwartz

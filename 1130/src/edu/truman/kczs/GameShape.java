@@ -3,6 +3,10 @@
  */
 package edu.truman.kczs;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 /**
  * @author kylercarlson
  *
@@ -12,8 +16,9 @@ public abstract class GameShape {
    private int yPos;
    private int width;
    private int height;
+   private Color color;
    
-   public GameShape(int xPos, int yPos, int width, int height){
+   public GameShape(int xPos, int yPos, int width, int height, Color color){
       this.xPos = xPos;
       this.yPos = yPos;
       this.width = width;
@@ -38,5 +43,11 @@ public abstract class GameShape {
    public int getHeight() {
       // TODO Auto-generated method stub
       return height;
+   }
+   
+   public void draw(Graphics2D g2){
+      Rectangle.Double rect = new Rectangle.Double(xPos, yPos, width, height);
+      g2.setColor(color);
+      g2.draw(rect);
    }
 }
