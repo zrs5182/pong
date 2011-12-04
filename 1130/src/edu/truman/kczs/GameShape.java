@@ -12,25 +12,25 @@ import java.awt.Rectangle;
  *
  */
 public abstract class GameShape {
-   private int xPos;
-   private int yPos;
+   private double xPos;
+   private double yPos;
    private int width;
    private int height;
    private Color color;
    
-   public GameShape(int xPos, int yPos, int width, int height, Color color){
+   public GameShape(double xPos, double yPos, int width, int height, Color color){
       this.xPos = xPos;
       this.yPos = yPos;
       this.width = width;
       this.height = height;
    }
    
-   public int getX() {
+   public double getX() {
       // TODO Auto-generated method stub
       return xPos;
    }
 
-   public int getY() {
+   public double getY() {
       // TODO Auto-generated method stub
       return yPos;
    }

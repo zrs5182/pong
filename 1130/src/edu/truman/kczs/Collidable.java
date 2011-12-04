@@ -9,8 +9,8 @@ package edu.truman.kczs;
  *
  */
 public interface Collidable {
-	public int getX();
-	public int getY();
+	public double getX();
+	public double getY();
 	public int getWidth();
 	public int getHeight();
 	public Direction isColliding(Collidable obj1);
