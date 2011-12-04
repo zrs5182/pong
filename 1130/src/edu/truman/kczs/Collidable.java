@@ -13,5 +13,5 @@ public interface Collidable {
 	public int getY();
 	public int getWidth();
 	public int getHeight();
-	public boolean isColliding(Collidable obj1);
+	public Direction isColliding(Collidable obj1);
 }

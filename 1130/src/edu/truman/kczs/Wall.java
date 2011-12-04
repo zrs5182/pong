@@ -14,8 +14,8 @@ public abstract class Wall extends GameShape implements Collidable {
 	      super(xPos, yPos, width, height, color);
 	   }
 	
-	public boolean isColliding(Collidable obj1) {
+	public Direction isColliding(Collidable obj1) {
 	      // TODO Auto-generated method stub
-	      return false;
+	      return Direction.NONE;
 	   }
 }

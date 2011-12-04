@@ -45,6 +45,14 @@ public abstract class GameShape {
       return height;
    }
    
+   public Color getColor() {
+      return color;
+   }
+   
+   public void setColor(Color color) {
+      this.color = color;
+   }
+   
    public void draw(Graphics2D g2){
       Rectangle.Double rect = new Rectangle.Double(xPos, yPos, width, height);
       g2.setColor(color);
