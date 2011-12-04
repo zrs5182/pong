@@ -11,7 +11,7 @@ import java.awt.Rectangle;
  * @author kylercarlson
  *
  */
-public abstract class GameShape {
+public abstract class GameShape implements Collidable{
    private double xPos;
    private double yPos;
    private int width;
@@ -57,5 +57,39 @@ public abstract class GameShape {
       Rectangle.Double rect = new Rectangle.Double(xPos, yPos, width, height);
       g2.setColor(color);
       g2.draw(rect);
+   }
+   
+   public Direction isColliding(Collidable obj) {
+      if (xPos < obj.getX() && yPos < obj.getY() && xPos + width > obj.getX() && yPos + height > obj.getY()){
+         if (xPos + width - (obj.getX()) >= yPos + height - (obj.getY())){
+            return Direction.RIGHT; // in the event of a tie, give it to the defending player
+         } else {
+            return Direction.DOWN;
+         }
+      } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() && xPos + width > obj.getX() + obj.getWidth() && yPos + height > obj.getY()){
+         if (obj.getX() + obj.getWidth() - xPos >= yPos + height - obj.getY()){
+            return Direction.LEFT; // in the event of a tie, give it to the defending player
+         } else {
+            return Direction.DOWN;
+         }
+      } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() + obj.getHeight() && xPos + width > obj.getX() + obj.getWidth() && yPos + height > obj.getY() + obj.getHeight()){
+         if (obj.getX() + obj.getWidth() - xPos >= obj.getY() + obj.getHeight() - yPos){
+            return Direction.LEFT; // in the event of a tie, give it to the defending player
+         } else {
+            return Direction.UP;
+         }
+      } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() && xPos + width > obj.getX() && yPos + height > obj.getY() + obj.getHeight()){
+         if (xPos + width - (obj.getX()) >= obj.getY() + obj.getHeight() - yPos){
+            return Direction.RIGHT; // in the event of a tie, give it to the defending player
+         } else {
+            return Direction.UP;
+         }
+      }
+      return Direction.NONE;
+   }
+   
+   public void translate(double theta){
+      xPos += Math.cos(theta);
+      yPos += Math.sin(theta);
    }
 }

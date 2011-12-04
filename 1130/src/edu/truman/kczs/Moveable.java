@@ -17,4 +17,5 @@ public interface Moveable {
 	public void setAngle();
 	public void setWidth();
 	public void setHeight();
+	public void translate(double theta);
 }
