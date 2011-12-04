@@ -17,13 +17,13 @@ import javax.swing.JComponent;
 @SuppressWarnings("serial")
 public class SceneComponent extends JComponent {
 
-   private ArrayList<GameShape> pieces;
+   private ArrayList<Drawable> pieces;
    
    public SceneComponent(){
-   this.pieces = new ArrayList<GameShape>();
+   this.pieces = new ArrayList<Drawable>();
    }
    
-   public void add(GameShape p) {
+   public void add(Drawable p) {
       pieces.add(p);
       repaint();
    }
@@ -31,7 +31,7 @@ public class SceneComponent extends JComponent {
    public void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D) g;
-      for (GameShape p  : pieces) {
+      for (Drawable p  : pieces) {
          p.draw(g2);
       }
    }

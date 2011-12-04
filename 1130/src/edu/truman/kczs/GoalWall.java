@@ -13,10 +13,8 @@ import java.awt.Graphics;
  */
 public class GoalWall extends Wall {
 
-	public GoalWall(double xPos, double yPos, int width, int height, Color color) {
-		super(xPos, yPos, width, height, color);
+	public GoalWall(double xPos, double yPos, int width, int height) {
+		super(xPos, yPos, width, height, null);
 		// TODO Auto-generated constructor stub
 	}
-	
-   private void draw(Graphics g2){}
 }

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class Field {
+public class Field implements Drawable{
    private Color fieldColor;
    private Color lineColor;
    private int lineWidth;

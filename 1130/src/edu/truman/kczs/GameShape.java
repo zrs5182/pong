@@ -11,7 +11,7 @@ import java.awt.Rectangle;
  * @author kylercarlson
  *
  */
-public abstract class GameShape implements Collidable{
+public abstract class GameShape implements Collidable, Drawable{
    private double xPos;
    private double yPos;
    private int width;
@@ -23,6 +23,7 @@ public abstract class GameShape implements Collidable{
       this.yPos = yPos;
       this.width = width;
       this.height = height;
+      this.color = color;
    }
    
    public double getX() {
@@ -56,6 +57,7 @@ public abstract class GameShape implements Collidable{
    public void draw(Graphics2D g2){
       Rectangle.Double rect = new Rectangle.Double(xPos, yPos, width, height);
       g2.setColor(color);
+      g2.fill(rect);
       g2.draw(rect);
    }
    

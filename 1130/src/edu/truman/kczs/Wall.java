@@ -9,7 +9,7 @@ import java.awt.Color;
  * @author kylercarlson
  *
  */
-public abstract class Wall extends GameShape {
+public class Wall extends GameShape {
 	public Wall(double xPos, double yPos, int width, int height, Color color){
 	      super(xPos, yPos, width, height, color);
 	   }
