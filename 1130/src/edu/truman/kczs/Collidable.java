@@ -11,8 +11,6 @@ package edu.truman.kczs;
 public interface Collidable {
 	public int getX();
 	public int getY();
-	public int getSpeed();
-	public int getAngle();
 	public int getWidth();
 	public int getHeight();
 	public boolean isColliding(Collidable obj1);

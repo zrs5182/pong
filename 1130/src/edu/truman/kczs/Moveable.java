@@ -9,6 +9,8 @@ package edu.truman.kczs;
  *
  */
 public interface Moveable {
+	public int getSpeed();
+	public int getAngle();
 	public void setX();
 	public void setY();
 	public void setSpeed();
