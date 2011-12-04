@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * @author kylercarlson
+ * @author Kyler Carlson
+ * @author Zach Schwartz
  *
  */
 public class GoalWall extends Wall {
@@ -17,7 +18,5 @@ public class GoalWall extends Wall {
 		// TODO Auto-generated constructor stub
 	}
 	
-	private void draw(Graphics g2){
-		
-	}
+   private void draw(Graphics g2){}
 }
