@@ -3,9 +3,6 @@
  */
 package edu.truman.kczs;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 /**
  * @author Kyler Carlson
  * @author Zach Schwartz

@@ -1,7 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 import edu.truman.kczs.Ball;
 import edu.truman.kczs.Field;
@@ -22,11 +25,12 @@ public class KCZS {
 	public static final int WALL_THICKNESS = 20;
 	public static final int PADDLE_HEIGHT = 150;
 	public static final Color BACKGROUND = Color.black;
-	public static final Color LINE_COLOR = Color.white;
+	public static final Color LINE_COLOR = Color.gray;
 	public static final Color WALL_COLOR = Color.white;
 	public static final Color PADDLE1_COLOR = Color.red;
 	public static final Color PADDLE2_COLOR = Color.blue;
 	public static final Color BALL_COLOR = Color.green;
+
 	
    /**
     * @param args
@@ -55,6 +59,17 @@ public class KCZS {
 	   scene.add(paddle1);
 	   scene.add(paddle2);
 	   scene.add(ball);
+	   
+	   ActionListener listener = new
+		         ActionListener() {
+		            public void actionPerformed(ActionEvent event) {
+		               ball.translate(0);
+		               scene.repaint();
+		            }
+		      };
+	   
+	   Timer t = new Timer(10, listener);
+	   t.start();
 	   
    }
 
