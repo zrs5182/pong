@@ -11,6 +11,7 @@ import edu.truman.kczs.Direction;
 import edu.truman.kczs.Field;
 import edu.truman.kczs.GoalWall;
 import edu.truman.kczs.Paddle;
+import edu.truman.kczs.PlayerPanel;
 import edu.truman.kczs.RunnableBall;
 import edu.truman.kczs.RunnablePaddle;
 import edu.truman.kczs.SceneComponent;
