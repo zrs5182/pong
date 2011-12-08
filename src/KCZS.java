@@ -3,7 +3,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.truman.kczs.Ball;
@@ -49,11 +51,16 @@ public class KCZS {
 	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   final SceneComponent scene = new SceneComponent();
 	   final PlayerPanel player1Options = new PlayerPanel(1);
-	   frame.add(player1Options, BorderLayout.SOUTH);
+	   final PlayerPanel player2Options = new PlayerPanel(2);
+	   JButton startButton = new JButton("New Game");
+	   JPanel optionsPanel = new JPanel();
+	   optionsPanel.add(player1Options, BorderLayout.WEST);
+	   optionsPanel.add(startButton, BorderLayout.CENTER);
+	   optionsPanel.add(player2Options, BorderLayout.EAST);
+	   frame.add(optionsPanel, BorderLayout.SOUTH);
 	   frame.add(scene, BorderLayout.CENTER);
 	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
 	   frame.setVisible(true);
-
 	   
 	   final Field field = new Field(scene, BACKGROUND, LINE_COLOR, WALL_THICKNESS);
 	   final GoalWall leftWall = new GoalWall(0, 0+WALL_THICKNESS, WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS*2);
