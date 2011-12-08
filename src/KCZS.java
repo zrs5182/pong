@@ -15,6 +15,7 @@ import edu.truman.kczs.PlayerPanel;
 import edu.truman.kczs.RunnableBall;
 import edu.truman.kczs.RunnablePaddle;
 import edu.truman.kczs.SceneComponent;
+import edu.truman.kczs.ScorePanel;
 import edu.truman.kczs.Wall;
 
 
@@ -49,6 +50,9 @@ public class KCZS {
 	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   final SceneComponent scene = new SceneComponent();
 	   final PlayerPanel player1Options = new PlayerPanel();
+	   final ScorePanel player1Score = new ScorePanel(Color.BLUE);
+	   player1Score.setScore(3);
+	   frame.add(player1Score, BorderLayout.NORTH);
 	   frame.add(player1Options, BorderLayout.SOUTH);
 	   frame.add(scene, BorderLayout.CENTER);
 	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
