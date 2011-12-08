@@ -18,4 +18,6 @@ public interface Moveable {
 	public void setWidth(int width); // doesn't belong here
 	public void setHeight(int height); // doesn't belong here
 	public void translate(double theta);
+	public void pause();
+	public void unpause();
 }

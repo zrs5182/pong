@@ -64,35 +64,39 @@ public abstract class GameShape implements Collidable, Drawable{
    public Direction isColliding(Collidable obj) {
       if (xPos < obj.getX() && yPos < obj.getY() && xPos + width > obj.getX() && yPos + height > obj.getY()){
          if (xPos + width - (obj.getX()) >= yPos + height - (obj.getY())){
-            return Direction.RIGHT; // in the event of a tie, give it to the defending player
+        	 System.out.println("1");
+        	 return Direction.RIGHT; // in the event of a tie, give it to the defending player
          } else {
-            return Direction.DOWN;
+        	 System.out.println("2");
+        	 return Direction.DOWN;
          }
       } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() && xPos + width > obj.getX() + obj.getWidth() && yPos + height > obj.getY()){
          if (obj.getX() + obj.getWidth() - xPos >= yPos + height - obj.getY()){
-            return Direction.LEFT; // in the event of a tie, give it to the defending player
+        	 System.out.println("3");
+        	 return Direction.LEFT; // in the event of a tie, give it to the defending player
          } else {
-            return Direction.DOWN;
+        	 System.out.println("4");
+        	 return Direction.UP;
          }
       } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() + obj.getHeight() && xPos + width > obj.getX() + obj.getWidth() && yPos + height > obj.getY() + obj.getHeight()){
          if (obj.getX() + obj.getWidth() - xPos >= obj.getY() + obj.getHeight() - yPos){
-            return Direction.LEFT; // in the event of a tie, give it to the defending player
+        	 System.out.println("5");
+        	 return Direction.LEFT; // in the event of a tie, give it to the defending player
          } else {
-            return Direction.UP;
+        	 System.out.println("6");
+        	 return Direction.DOWN;
          }
       } else if (xPos < obj.getX() + obj.getWidth() && yPos < obj.getY() && xPos + width > obj.getX() && yPos + height > obj.getY() + obj.getHeight()){
          if (xPos + width - (obj.getX()) >= obj.getY() + obj.getHeight() - yPos){
-            return Direction.RIGHT; // in the event of a tie, give it to the defending player
+        	 System.out.println("7");
+        	 return Direction.RIGHT; // in the event of a tie, give it to the defending player
          } else {
-            return Direction.UP;
+        	 System.out.println("8");
+        	 return Direction.UP;
          }
       }
+      
       return Direction.NONE;
-   }
-   
-   public void translate(double theta){
-      xPos += Math.cos(theta);
-      yPos += Math.sin(theta);
    }
    
    public void setX(double xPos){
