@@ -48,7 +48,7 @@ public class KCZS {
 	   JFrame frame = new JFrame();
 	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   final SceneComponent scene = new SceneComponent();
-	   final PlayerPanel player1Options = new PlayerPanel();
+	   final PlayerPanel player1Options = new PlayerPanel(1);
 	   frame.add(player1Options, BorderLayout.SOUTH);
 	   frame.add(scene, BorderLayout.CENTER);
 	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
