@@ -27,11 +27,11 @@ public class Player {
    }
    
    public void moveUp(){
-      paddle.translate(Math.PI/2);
+      paddle.translate();
    }
    
    public void moveDown(){
-      paddle.translate(Math.PI/3);
+      paddle.translate();
    }
    
    public String toString(){

@@ -15,7 +15,6 @@ import edu.truman.kczs.PlayerPanel;
 import edu.truman.kczs.RunnableBall;
 import edu.truman.kczs.RunnablePaddle;
 import edu.truman.kczs.SceneComponent;
-import edu.truman.kczs.ScorePanel;
 import edu.truman.kczs.Wall;
 
 
@@ -27,7 +26,7 @@ import edu.truman.kczs.Wall;
 public class KCZS {
 
 	public static final int WIN_WIDTH = 900;
-	public static final int WIN_HEIGHT = 600;
+	public static final int WIN_HEIGHT = 800;
 	public static final int WALL_THICKNESS = 20;
 	public static final int PADDLE_HEIGHT = 560;//150;
 	public static final Color BACKGROUND = Color.black;
@@ -36,9 +35,9 @@ public class KCZS {
 	public static final Color PADDLE1_COLOR = Color.red;
 	public static final Color PADDLE2_COLOR = Color.blue;
 	public static final Color BALL_COLOR = Color.green;
-	public static final int PADDLE_INIT_SPEED = 0;
+	public static final double PADDLE_INIT_SPEED = 0.0;
 	
-	public static final int BALL_SPEED = 2; //will change
+	public static final double BALL_SPEED = 2.0; //will change
 	
 
 	
@@ -50,9 +49,6 @@ public class KCZS {
 	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	   final SceneComponent scene = new SceneComponent();
 	   final PlayerPanel player1Options = new PlayerPanel();
-	   final ScorePanel player1Score = new ScorePanel(Color.BLUE);
-	   player1Score.setScore(3);
-	   frame.add(player1Score, BorderLayout.NORTH);
 	   frame.add(player1Options, BorderLayout.SOUTH);
 	   frame.add(scene, BorderLayout.CENTER);
 	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
@@ -64,14 +60,12 @@ public class KCZS {
 	   final GoalWall rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS, 0+WALL_THICKNESS, WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS*2);
 	   final Wall topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS, WALL_COLOR);
 	   final Wall botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS, scene.getWidth() ,WALL_THICKNESS, WALL_COLOR);
-	   final RunnablePaddle paddle1 = new RunnablePaddle(0,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE1_COLOR, PADDLE_INIT_SPEED);
-	   final RunnablePaddle paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE2_COLOR, PADDLE_INIT_SPEED);
-	   final RunnableBall ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS)/2, (scene.getHeight()-WALL_THICKNESS)/2, WALL_THICKNESS, WALL_THICKNESS, BALL_COLOR, BALL_SPEED);
+	   final RunnablePaddle paddle1 = new RunnablePaddle(0,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE1_COLOR, PADDLE_INIT_SPEED, 0.0, 0.0);
+	   final RunnablePaddle paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE2_COLOR, PADDLE_INIT_SPEED, 0.0, 0.0);
+	   final RunnableBall ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS)/2, (scene.getHeight()-WALL_THICKNESS)/2, WALL_THICKNESS, WALL_THICKNESS, BALL_COLOR, BALL_SPEED, 1.0, 0.5);
 	   Thread ballThread = new Thread(ball);
 	   Thread paddle1Thread = new Thread(paddle1);
 	   Thread paddle2Thread = new Thread(paddle2);
-	   
-	   ball.setTheta(Math.PI/2 -1.46);
 	   
 	   ballThread.start();
 	   paddle1Thread.start();
@@ -92,16 +86,16 @@ public class KCZS {
 		               Direction dir3 = topWall.isColliding(ball);
 		               Direction dir4 = botWall.isColliding(ball);
 		            	if (dir1 != Direction.NONE){
-		            	   if (ball.getColliding() == false) ball.flipTheta(dir1);
+		            	   if (ball.getColliding() == false) ball.flipDirection(dir1);
 		            	   //System.out.println(dir1);
 		               } else if (dir2 != Direction.NONE){
-		            	   if (ball.getColliding() == false) ball.flipTheta(dir2);
+		            	   if (ball.getColliding() == false) ball.flipDirection(dir2);
 		            	   //System.out.println(dir2);
 		               } else if (dir3 != Direction.NONE){
-		            	   if (ball.getColliding() == false) ball.flipTheta(dir3);
+		            	   if (ball.getColliding() == false) ball.flipDirection(dir3);
 		            	   //System.out.println(dir3);
 		               } else if (dir4 != Direction.NONE){
-		            	   if (ball.getColliding() == false) ball.flipTheta(dir4);
+		            	   if (ball.getColliding() == false) ball.flipDirection(dir4);
 		            	   //System.out.println(dir4);
 		               }
 		            	

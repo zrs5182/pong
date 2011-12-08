@@ -14,17 +14,22 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	private double theta;
 	private boolean paused = false;
 	private boolean colliding = false;
+	private double dx;
+	private double dy;
 	
 	
-	public MoveableShape(double xPos, double yPos, int width, int height,Color color, int speed) {
+	public MoveableShape(double xPos, double yPos, int width, int height,Color color, double speed, double dx, double dy) {
 		super(xPos, yPos, width, height, color);
 		this.speed = speed;
-		// TODO Auto-generated constructor stub
+		this.dx = dx;
+		this.dy = dy;
 	}
 	
 	public MoveableShape(double xPos, double yPos, int width, int height,Color color) {
 		super(xPos, yPos, width, height, color);
 		this.speed = 0;
+		this.dx = 0;
+		this.dy = 0;
 		// TODO Auto-generated constructor stub
 	} 
 
@@ -39,9 +44,13 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	/* (non-Javadoc)
 	 * @see edu.truman.kczs.Moveable#getAngle()
 	 */
-	public double getTheta() {
+	public double getDx() {
 		// TODO Auto-generated method stub
-		return theta;
+		return dx;
+	}
+	
+	public double getDy() {
+		return dy;
 	}
 
 	/* (non-Javadoc)
@@ -55,34 +64,41 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	/* (non-Javadoc)
 	 * @see edu.truman.kczs.Moveable#setAngle()
 	 */
-	public void setTheta(double theta) {
+	public void setDx(double dx) {
 		// TODO Auto-generated method stub
-		this.theta = theta;
+		this.dx = dx;
 	}
 	
-	public void translate(double theta){
+	public void setDy(double dy) {
+		this.dy = dy;
+	}
+	
+	public void translate(){
 		if (!paused){
-			this.setX(this.getX() + Math.cos(theta) * speed);
-			this.setY(this.getY() + Math.sin(theta) * speed);
-			System.out.println(this.getX() + " " + this.getY());
+			this.setX(this.getX() +  dx * speed);
+			this.setY(this.getY() +  dy * speed);
 		}
 	}
 	
-	public void flipTheta(Direction direction){
-		double newTheta = 0.0;
-		double x = 0.0;
-		double y = 0.0;
-		if (direction == Direction.UP || direction == Direction.DOWN){
-			x = -1 * Math.cos(theta);
-			y = Math.sin(theta);
-		} else if (direction == Direction.LEFT || direction == Direction.RIGHT){
-			x = Math.cos(theta);
-			y = -1 * Math.sin(theta);
+	public void flipDirection(Direction direction){
+		//double newTheta = 0.0;
+		//double x = 0.0;
+		//double y = 0.0;
+		//if (direction == Direction.UP || direction == Direction.DOWN){
+		//	x = -1 * Math.cos(theta);
+		//	y = Math.sin(theta);
+		//} else if (direction == Direction.LEFT || direction == Direction.RIGHT){
+		//	x = Math.cos(theta);
+		//	y = -1 * Math.sin(theta);
+		//}
+		//newTheta = Math.atan(y/x);
+		//if ((x > 0 && y > 0) || (x < 0 && y < 0)) newTheta *= -1;
+		
+		if (direction == Direction.RIGHT || direction == Direction.LEFT){
+			dx *= -1;
+		} else if (direction == Direction.UP || direction == Direction.DOWN) {
+			dy *= -1;
 		}
-		newTheta = Math.atan(y/x);
-		if ((x > 0 && y < 0) || (x < 0 && y > 0)) newTheta *= -1;
-		System.out.println("Flip theta: " + Math.toDegrees(theta) + " " + Math.toDegrees(newTheta));
-		theta = newTheta;
 	}
 	
 	public void pause() {

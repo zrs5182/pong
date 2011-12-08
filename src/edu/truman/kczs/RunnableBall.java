@@ -12,8 +12,8 @@ import java.awt.Color;
 public class RunnableBall extends Ball implements Runnable {
 
 	public RunnableBall(double xPos, double yPos, int width, int height,
-			Color color, int speed) {
-		super(xPos, yPos, width, height, color, speed);
+			Color color, double speed, double dx, double dy) {
+		super(xPos, yPos, width, height, color, speed, dx, dy);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,7 +25,7 @@ public class RunnableBall extends Ball implements Runnable {
 		// TODO Auto-generated method stub
 		while (true) {
 			try {
-				this.translate(this.getTheta());
+				this.translate();
 				Thread.sleep(Constants.THREAD_DELAY);
 			}
 			catch (InterruptedException exception) {

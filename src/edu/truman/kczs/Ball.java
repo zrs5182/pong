@@ -12,8 +12,8 @@ import java.awt.Color;
  */
 public class Ball extends MoveableShape{
 
-   public Ball(double xPos, double yPos, int width, int height, Color color, int speed) {
-      super(xPos, yPos, width, height, color, speed);
+   public Ball(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy) {
+      super(xPos, yPos, width, height, color, speed, dx, dy);
    }
 
 }
