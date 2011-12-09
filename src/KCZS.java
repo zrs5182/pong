@@ -30,7 +30,7 @@ public class KCZS {
 	public static final int WIN_WIDTH = 900;
 	public static final int WIN_HEIGHT = 800;
 	public static final int WALL_THICKNESS = 20;
-	public static final int PADDLE_HEIGHT = 560;//150;
+	public static final int PADDLE_HEIGHT = 510;//150;
 	public static final Color BACKGROUND = Color.black;
 	public static final Color LINE_COLOR = Color.gray;
 	public static final Color WALL_COLOR = Color.white;

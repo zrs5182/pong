@@ -11,7 +11,6 @@ import java.awt.Color;
  */
 public abstract class MoveableShape extends GameShape implements Moveable {
 	private double speed;
-	private double theta;
 	private boolean paused = false;
 	private boolean colliding = false;
 	private double dx;
@@ -81,22 +80,13 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	}
 	
 	public void flipDirection(Direction direction){
-		//double newTheta = 0.0;
-		//double x = 0.0;
-		//double y = 0.0;
-		//if (direction == Direction.UP || direction == Direction.DOWN){
-		//	x = -1 * Math.cos(theta);
-		//	y = Math.sin(theta);
-		//} else if (direction == Direction.LEFT || direction == Direction.RIGHT){
-		//	x = Math.cos(theta);
-		//	y = -1 * Math.sin(theta);
-		//}
-		//newTheta = Math.atan(y/x);
-		//if ((x > 0 && y > 0) || (x < 0 && y < 0)) newTheta *= -1;
-		
 		if (direction == Direction.RIGHT || direction == Direction.LEFT){
 			dx *= -1;
 		} else if (direction == Direction.UP || direction == Direction.DOWN) {
+			dy *= -1;
+		} else if (direction == Direction.REFLECT) {
+			// hits corner of board
+			dx *= -1;
 			dy *= -1;
 		}
 	}

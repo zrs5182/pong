@@ -30,7 +30,7 @@ public class PlayerPanel extends JPanel {
 	JRadioButton expertButton;
 	ArrayList<Color> colors;
 	ArrayList<String> colorNames;
-	JComboBox<String> colorList;
+	JComboBox colorList;
 
 
 	public PlayerPanel(int playerNumber) {
@@ -52,7 +52,7 @@ public class PlayerPanel extends JPanel {
 		colorNames.add("Blue");
 		colors.add(Color.green);
 		colorNames.add("Green");
-		colorList = new JComboBox<String>();
+		colorList = new JComboBox();
 		for (String color : colorNames) {
 			colorList.addItem(color);
 		}
