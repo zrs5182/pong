@@ -10,7 +10,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -18,11 +17,13 @@ import javax.swing.border.TitledBorder;
  */
 
 /**
- * @author Zach
+ * @author Kyler Carlson
+ * @author Zach Schwartz
  * 
  */
 @SuppressWarnings("serial")
 public class PlayerPanel extends JPanel {
+	static int id=1;
 	JRadioButton playerHuman;
 	JRadioButton playerComputer;
 	JRadioButton beginnerButton;
@@ -35,8 +36,11 @@ public class PlayerPanel extends JPanel {
 
 	public PlayerPanel(int playerNumber) {
 		// Create the Radio Buttons
-		playerHuman = new JRadioButton("Human", true);
-		playerComputer = new JRadioButton("Computer");
+		boolean isSelected = true;
+		if(id % 2 == 0)
+			isSelected = false;
+		playerHuman = new JRadioButton("Human", isSelected);
+		playerComputer = new JRadioButton("Computer", !isSelected);
 
 		// creates skill level buttons
 		beginnerButton = new JRadioButton("Beginner", true);
@@ -56,19 +60,15 @@ public class PlayerPanel extends JPanel {
 		for (String color : colorNames) {
 			colorList.addItem(color);
 		}
+		
+		colorList.setSelectedIndex(id-1);
 
 		// Add buttons to player group
 		ButtonGroup playerTypeGroup = new ButtonGroup();
 		playerTypeGroup.add(playerHuman);
 		playerTypeGroup.add(playerComputer);
 
-		// Creates a panel for player type and adds buttons to a panel
-		JPanel typeMenu = new JPanel();
-		typeMenu.setLayout(new BoxLayout(typeMenu, BoxLayout.PAGE_AXIS));
-		typeMenu.setBorder(new EtchedBorder());
-		typeMenu.add(playerHuman);
-		typeMenu.add(playerComputer);
-		typeMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 
 		// groups skill level buttons for player
 		ButtonGroup skillGroup = new ButtonGroup();
@@ -91,16 +91,29 @@ public class PlayerPanel extends JPanel {
 		colorMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
 		colorMenu.add(colorList);
 
-		// Makes the playerPanel and adds the menu panels
-		JPanel playerPanel = new JPanel();
-		playerPanel.setBorder(new TitledBorder("Player " + playerNumber
+		// Creates a panel for player type and adds buttons to a panel
+				JPanel typeMenu = new JPanel();
+				typeMenu.setLayout(new BoxLayout(typeMenu, BoxLayout.PAGE_AXIS));
+				typeMenu.setBorder(new TitledBorder("Type"));
+				typeMenu.add(playerHuman);
+				typeMenu.add(playerComputer);
+				typeMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+				
+		//makes a panel to contain the color drop down box and the player types
+				JPanel playerStatus = new JPanel();
+				playerStatus.setLayout(new BoxLayout(playerStatus, BoxLayout.PAGE_AXIS));
+				playerStatus.add(typeMenu);
+				playerStatus.add(colorMenu);
+				
+		//adds the menu panels
+		setBorder(new TitledBorder("Player " + playerNumber
 				+ " Options"));
-		playerPanel.setLayout(new BorderLayout());
-		playerPanel.add(typeMenu, BorderLayout.WEST);
-		playerPanel.add(skillMenu, BorderLayout.EAST);
-		playerPanel.add(colorMenu, BorderLayout.SOUTH);
-		playerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(playerPanel);
+		setLayout(new BorderLayout());
+		add(playerStatus, BorderLayout.WEST);
+		add(skillMenu, BorderLayout.EAST);
+		setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		id++;
 	}
 
 	public Color getColor() {
