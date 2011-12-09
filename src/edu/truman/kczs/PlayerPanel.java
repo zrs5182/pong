@@ -129,13 +129,13 @@ public class PlayerPanel extends JPanel {
 		}
 	}
 
-	public String getSkillLevel() {
+	public SkillLevel getSkillLevel() {
 		if (beginnerButton.isSelected()) {
-			return "Beginner";
+			return SkillLevel.BEGINNER;
 		} else if (intermediateButton.isSelected()) {
-			return "Intermediate";
+			return SkillLevel.INTERMEDIATE;
 		} else {
-			return "Expert";
+			return SkillLevel.EXPERT;
 		}
 	}
 }
