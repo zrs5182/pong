@@ -50,7 +50,29 @@ public class KCZS {
 		game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
 		gameThread = new Thread(game);
 		gameThread.start();
+		game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+		gameThread = new Thread(game);
+		gameThread.start();
 
+		startButton.addActionListener(new
+				ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				paused = false; // unpause a game if making a new one
+				gameThread.interrupt();
+				game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+				gameThread = new Thread(game);
+				gameThread.start();
+			}
+		});
+		
+		pauseButton.addActionListener(new
+				ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				paused = !paused;
+				game.pause(paused);
+			}
+		});
+	
 		startButton.addActionListener(new
 				ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -71,8 +93,5 @@ public class KCZS {
 		});
 	}
 
-	public boolean getPaused(){
-		return paused;
-	}
 
 }
