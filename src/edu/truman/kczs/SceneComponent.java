@@ -28,6 +28,10 @@ public class SceneComponent extends JComponent {
       repaint();
    }
    
+   public void remove(Drawable p) {
+	   pieces.remove(p);
+   }
+   
    public void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D) g;

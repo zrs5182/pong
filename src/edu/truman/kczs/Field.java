@@ -8,18 +8,18 @@ public class Field implements Drawable{
    private Color fieldColor;
    private Color lineColor;
    private int lineWidth;
-   private SceneComponent scene;
+   private int width;
+   private int height;
    
-   public Field(SceneComponent scene, Color fieldColor, Color lineColor, int lineWidth){
+   public Field(int width, int height, Color fieldColor, Color lineColor, int lineWidth){
       this.fieldColor = fieldColor;
-      this.scene = scene;
       this.lineColor = lineColor;
       this.lineWidth = lineWidth;
    }
 
    public void draw(Graphics2D g2){
-      Rectangle2D.Double field = new Rectangle2D.Double(0, 0, scene.getWidth(), scene.getHeight());
-      Rectangle2D.Double line = new Rectangle2D.Double((scene.getWidth()-lineWidth)/2, 0, lineWidth, scene.getHeight() );
+      Rectangle2D.Double field = new Rectangle2D.Double(0, 0, width, height);
+      Rectangle2D.Double line = new Rectangle2D.Double((width-lineWidth)/2, 0, lineWidth, height );
    
       g2.setColor(fieldColor);
       g2.fill(field);
@@ -28,5 +28,10 @@ public class Field implements Drawable{
       g2.setColor(lineColor);
       g2.fill(line);
       g2.draw(line);
+   }
+   
+   public void resize(int width, int height){
+	   this.width = width;
+	   this.height = height;
    }
 }

@@ -13,9 +13,8 @@ public class Player {
    private int score;
    private Paddle paddle;
    
-   public Player(String name, Paddle paddle){
+   public Player(String name, int paddleX, int paddleY, int paddleW, int paddleH){
       this.name = name;
-      this.paddle = paddle;
    }
 
    public void addPoint(){
@@ -37,4 +36,9 @@ public class Player {
    public String toString(){
       return name;
    }
+   
+   public double getPaddleX(){
+	   return paddle.getX();
+   }
+   
 }

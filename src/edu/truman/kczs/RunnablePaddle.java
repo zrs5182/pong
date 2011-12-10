@@ -18,7 +18,7 @@ public class RunnablePaddle extends Paddle implements Runnable {
 				Thread.sleep(Constants.THREAD_DELAY);
 			}
 			catch (InterruptedException exception) {
-				System.out.println("Ball Thread Exception");
+				System.out.println("Paddle Thread Interrupted");
 			}
 		
 		}
