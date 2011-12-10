@@ -12,8 +12,8 @@ import java.awt.Color;
 public class RunnableBall extends Ball implements Runnable {
         
         public RunnableBall(double xPos, double yPos, int width, int height,
-                        Color color, double speed, double dx, double dy) {
-                super(xPos, yPos, width, height, color, speed, dx, dy);
+                        Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
+                super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
                 // TODO Auto-generated constructor stub
         }
 

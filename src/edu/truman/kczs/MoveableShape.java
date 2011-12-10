@@ -15,22 +15,24 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	private boolean colliding = false;
 	private double dx;
 	private double dy;
+	private double top;
+	private double bot;
+	private double left;
+	private double right;
 	
 	
-	public MoveableShape(double xPos, double yPos, int width, int height,Color color, double speed, double dx, double dy) {
+	
+	
+	public MoveableShape(double xPos, double yPos, int width, int height,Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
 		super(xPos, yPos, width, height, color);
 		this.speed = speed;
 		this.dx = dx;
 		this.dy = dy;
+		this.top = top;
+		this.bot = bot;
+		this.left = left;
+		this.right = right;
 	}
-	
-	public MoveableShape(double xPos, double yPos, int width, int height,Color color) {
-		super(xPos, yPos, width, height, color);
-		this.speed = 0;
-		this.dx = 0;
-		this.dy = 0;
-		// TODO Auto-generated constructor stub
-	} 
 
 	/* (non-Javadoc)
 	 * @see edu.truman.kczs.Moveable#getSpeed()
@@ -74,8 +76,8 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	
 	public void translate(){
 		if (!paused){
-			this.setX(this.getX() +  dx * speed);
-			this.setY(this.getY() +  dy * speed);
+			this.setBoundedX(this.getX() +  dx * speed, this.getWidth(), left, right);
+			this.setBoundedY(this.getY() +  dy * speed, this.getHeight(), top, bot);
 		}
 	}
 	
@@ -105,5 +107,40 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	
 	public boolean getColliding(){
 		return colliding;
+	}
+	
+	
+	/**
+	 * Will translate in the X direction but not allow for the shape to leave boundaries
+	 * @param targetX the desired X
+	 * @param width the width of the moving object
+	 * @param left the minimum allowed x
+	 * @param right the maximum allowed position of the shape (must include width)
+	 */
+	public void setBoundedX(double targetX, int width, double left, double right){
+		if (targetX < left) {
+			targetX = left;
+		} else if (targetX + width > right) {
+			targetX = right - width;
+		}
+		
+		this.setY(targetX);
+	}
+	
+	/**
+	 * Will translate in the Y direction but not allow for the shape to leave boundaries
+	 * @param targetY the desired Y
+	 * @param height the height of the moving object
+	 * @param top the minimum allowed y
+	 * @param bottom the maximum allowed position of the shape (must include height)
+	 */
+	public void setBoundedY(double targetY, int height, double top, double bottom){
+		if (targetY < top) {
+			targetY = top;
+		} else if (targetY + height > bottom) {
+			targetY = bottom - height;
+		}
+		
+		this.setY(targetY);
 	}
 }

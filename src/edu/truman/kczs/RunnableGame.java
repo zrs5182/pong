@@ -3,6 +3,8 @@ package edu.truman.kczs;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import edu.truman.kczs.Ball;
 import edu.truman.kczs.Direction;
@@ -28,8 +30,9 @@ public class RunnableGame implements Runnable{
 	public static final double PADDLE_INIT_SPEED_DEFAULT = 0.0;
 
 	public static final double BALL_SPEED_DEFAULT = 3.0; //will change
+	public static final int AI_SEARCH_DISTANCE = 600;
 
-	private final SceneComponent scene;
+	private SceneComponent scene;
 	private final Field field;
 	private final GoalWall leftWall;
 	private final GoalWall rightWall;
@@ -51,10 +54,10 @@ public class RunnableGame implements Runnable{
 	private SkillLevel playerTwoSkill;
 	private int playerTwoPaddleHeight = PADDLE_HEIGHT_DEFAULT;
 	
-	private int AI_SEARCH_DISTANCE = 600;
+	
 
-	public RunnableGame(SceneComponent scene, boolean p1Hum, SkillLevel p1Skill, Color p1Col, boolean p2Hum, SkillLevel p2Skill, Color p2Col){
-		this.scene = scene;
+	public RunnableGame(boolean p1Hum, SkillLevel p1Skill, Color p1Col, boolean p2Hum, SkillLevel p2Skill, Color p2Col){
+		scene = new SceneComponent();
 		this.playerOneColor = p1Col;
 		this.playerOneHuman = p1Hum;
 		this.playerOneSkill = p1Skill;
@@ -76,9 +79,9 @@ public class RunnableGame implements Runnable{
 		rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS_DEFAULT, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
 		topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
 		botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS_DEFAULT, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
-		paddle1 = new RunnablePaddle(0,(scene.getHeight()-playerOnePaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0);
-		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-playerTwoPaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0);
-		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, 1.0, 0.5);
+		paddle1 = new RunnablePaddle(0,(scene.getHeight()-playerOnePaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), 0.0, WALL_THICKNESS_DEFAULT);
+		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-playerTwoPaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), this.getRight(), this.getRight() + WALL_THICKNESS_DEFAULT);
+		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, 1.0, 0.5, this.getTop(), this.getBot(), this.getLeft(), this.getRight());
 		ballThread = new Thread(ball);
 		paddle1Thread = new Thread(paddle1);
 		paddle2Thread = new Thread(paddle2);
@@ -93,6 +96,22 @@ public class RunnableGame implements Runnable{
 		scene.add(paddle1);
 		scene.add(paddle2);
 		scene.add(ball);
+		
+		scene.addComponentListener(new 
+				ComponentListener() {
+			public void componentResized(ComponentEvent e){
+				resize();
+			}
+			public void componentHidden(ComponentEvent e) {}
+			public void componentMoved(ComponentEvent e) {
+				resize();
+			}
+			public void componentShown(ComponentEvent e) {
+				resize();
+			}
+		});
+		
+		MainClass.addSceneComponent(scene);
 	}
 
 	public void run() {
@@ -102,15 +121,11 @@ public class RunnableGame implements Runnable{
 			try {
 				if (!playerOneHuman && Math.abs(ball.getX() - paddle1.getX()) < AI_SEARCH_DISTANCE) {
 					double target = ball.getY() - playerOnePaddleHeight / 2 + WALL_THICKNESS_DEFAULT/2;
-					if (target < topWall.getHeight()) target = topWall.getHeight();
-					if (target + paddle1.getHeight() > botWall.getY()) target = botWall.getY() - paddle1.getHeight();
-					paddle1.setY(target);
+					paddle1.setBoundedY(target, paddle1.getHeight(), this.getTop(), this.getBot());
 				}
 				if (!playerTwoHuman && Math.abs(ball.getX() - paddle2.getX()) < AI_SEARCH_DISTANCE) {
 					double target = ball.getY() - playerTwoPaddleHeight / 2 + WALL_THICKNESS_DEFAULT/2;
-					if (target < topWall.getHeight()) target = topWall.getHeight();
-					if (target + paddle2.getHeight() > botWall.getY()) target = botWall.getY() - paddle2.getHeight();
-					paddle2.setY(target);
+					paddle2.setBoundedY(target, paddle2.getHeight(), this.getTop(), this.getBot());
 				}
 				
 				Direction dir1 = paddle2.isColliding(ball);
@@ -119,16 +134,12 @@ public class RunnableGame implements Runnable{
 				Direction dir4 = botWall.isColliding(ball);
 				if (dir1 != Direction.NONE){
 					if (ball.getColliding() == false) ball.flipDirection(dir1);
-					//System.out.println(dir1);
 				} else if (dir2 != Direction.NONE){
 					if (ball.getColliding() == false) ball.flipDirection(dir2);
-					//System.out.println(dir2);
 				} else if (dir3 != Direction.NONE){
 					if (ball.getColliding() == false) ball.flipDirection(dir3);
-					//System.out.println(dir3);
 				} else if (dir4 != Direction.NONE){
 					if (ball.getColliding() == false) ball.flipDirection(dir4);
-					//System.out.println(dir4);
 				}
 
 				if (dir1 != Direction.NONE || dir2 != Direction.NONE || dir3 != Direction.NONE || dir4 != Direction.NONE) {
@@ -187,5 +198,21 @@ public class RunnableGame implements Runnable{
 		botWall.setY(scene.getHeight() - botWall.getHeight());
 		botWall.setHeight(botWall.getHeight());
 		field.resize(scene.getWidth(), scene.getHeight());
+	}
+	
+	public double getTop() {
+		return topWall.getY() + topWall.getHeight();
+	}
+	
+	public double getBot() {
+		return botWall.getY();
+	}
+	
+	public double getLeft() {
+		return leftWall.getX() + leftWall.getWidth();
+	}
+	
+	public double getRight() {
+		return rightWall.getX();
 	}
 }

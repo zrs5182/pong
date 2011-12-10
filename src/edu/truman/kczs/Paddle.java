@@ -10,8 +10,8 @@ import java.awt.Color;
  */
 public class Paddle extends MoveableShape{
 
-   public Paddle(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy) {
-      super(xPos, yPos, width, height, color, speed, dx, dy);
+   public Paddle(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
+      super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
    }
 
 }
