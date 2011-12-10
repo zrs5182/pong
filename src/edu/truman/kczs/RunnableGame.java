@@ -21,6 +21,7 @@ import javax.swing.Timer;
 
 public class RunnableGame implements Runnable{
 	public static final int WALL_THICKNESS_DEFAULT = 20;
+	public static final int GOAL_WALL_THICKNESS = 100; // slightly thinner to allow paddles to hit first
 	public static final int PADDLE_HEIGHT_DEFAULT = 100;//150;
 	public static final int PADDLE_DIFFUCULTY_CHANGE = 50;
 	public static final Color BACKGROUND_DEFAULT = Color.black;
@@ -28,8 +29,11 @@ public class RunnableGame implements Runnable{
 	public static final Color WALL_COLOR_DEFAULT = Color.white;
 	public static final Color BALL_COLOR_DEFAULT = Color.green;
 	public static final double PADDLE_INIT_SPEED_DEFAULT = 0.0;
+	public static final int NEW_BALL_DELAY = 1500; // time to pause thread for new ball
 
-	public static final double BALL_SPEED_DEFAULT = 3.0; //will change
+	public static final double BALL_SPEED_DEFAULT = 5.0; //will change
+	public static final double BALL_DX_DEFAULT = 1.0;
+	public static final double BALL_DY_DEFAULT = 0.5;
 	public static final int AI_SEARCH_DISTANCE = 600;
 
 	private SceneComponent scene;
@@ -53,6 +57,7 @@ public class RunnableGame implements Runnable{
 	private boolean playerTwoHuman;
 	private SkillLevel playerTwoSkill;
 	private int playerTwoPaddleHeight = PADDLE_HEIGHT_DEFAULT;
+	private boolean paused = false;
 	
 	
 
@@ -76,13 +81,13 @@ public class RunnableGame implements Runnable{
 			playerTwoPaddleHeight -= PADDLE_DIFFUCULTY_CHANGE;
 		}
 		field = new Field(scene.getWidth(), scene.getHeight(), BACKGROUND_DEFAULT, LINE_COLOR_DEFAULT, WALL_THICKNESS_DEFAULT);
-		leftWall = new GoalWall(0, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
-		rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS_DEFAULT, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
+		leftWall = new GoalWall(0 - GOAL_WALL_THICKNESS, 0+WALL_THICKNESS_DEFAULT, GOAL_WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
+		rightWall = new GoalWall(scene.getWidth(), WALL_THICKNESS_DEFAULT, GOAL_WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
 		topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
 		botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS_DEFAULT, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
 		paddle1 = new RunnablePaddle(0,(scene.getHeight()-playerOnePaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), getLeft(), WALL_THICKNESS_DEFAULT);
 		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-playerTwoPaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), this.getRight() - WALL_THICKNESS_DEFAULT, this.getRight());
-		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, 1.0, 0.5, this.getTop(), this.getBot(), this.getLeft(), this.getRight());
+		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, BALL_DX_DEFAULT, BALL_DY_DEFAULT, this.getTop(), this.getBot(), this.getLeft(), this.getRight());
 		ballThread = new Thread(ball);
 		paddle1Thread = new Thread(paddle1);
 		paddle2Thread = new Thread(paddle2);
@@ -118,36 +123,59 @@ public class RunnableGame implements Runnable{
 		resize(); // allows the field to be drawn with the scene's width and height since they are initialized to 0
 		while (true) {
 			try {
-				if (!playerOneHuman && Math.abs(ball.getX() - paddle1.getX()) < AI_SEARCH_DISTANCE) {
-					double target = ball.getY() - paddle1.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
-					paddle1.setBoundedY(target, paddle1.getHeight(), this.getTop(), this.getBot());
+				if (!paused) {
+					// player scoring
+					boolean p1Scored = rightWall.isColliding(ball) == Direction.LEFT;
+					boolean p2Scored = leftWall.isColliding(ball) == Direction.RIGHT;
+					
+					if (p1Scored || p2Scored){
+						pause(true);
+						ball.setSpeed(BALL_SPEED_DEFAULT); // removes any increase in speed from the last game
+						//increment the correct score
+						if (p1Scored) {
+							System.out.println("GOOOOOOOOOOOOOOOOOOOAL 1");
+						} else if (p2Scored) {
+							System.out.println("GOOOOOOOOOOOOOOOOOOOAL 2");
+						}
+	
+						Thread.sleep(NEW_BALL_DELAY);
+						resize();
+						pause(false);
+					}
+					
+					
+					if (!playerOneHuman && Math.abs(ball.getX() - paddle1.getX()) < AI_SEARCH_DISTANCE) {
+						double target = ball.getY() - paddle1.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
+						paddle1.setBoundedY(target, paddle1.getHeight(), this.getTop(), this.getBot());
+					}
+					if (!playerTwoHuman && Math.abs(ball.getX() - paddle2.getX()) < AI_SEARCH_DISTANCE) {
+						double target = ball.getY() - paddle2.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
+						paddle2.setBoundedY(target, paddle2.getHeight(), this.getTop(), this.getBot());
+					}
+					
+					Direction dir1 = paddle2.isColliding(ball);
+					Direction dir2 = paddle1.isColliding(ball);
+					Direction dir3 = topWall.isColliding(ball);
+					Direction dir4 = botWall.isColliding(ball);
+					if (dir1 != Direction.NONE){
+						if (ball.getColliding() == false) ball.flipDirection(dir1);
+					} else if (dir2 != Direction.NONE){
+						if (ball.getColliding() == false) ball.flipDirection(dir2);
+					} else if (dir3 != Direction.NONE){
+						if (ball.getColliding() == false) ball.flipDirection(dir3);
+					} else if (dir4 != Direction.NONE){
+						if (ball.getColliding() == false) ball.flipDirection(dir4);
+					}
+	
+					if (dir1 != Direction.NONE || dir2 != Direction.NONE || dir3 != Direction.NONE || dir4 != Direction.NONE) {
+						ball.setColliding(true);
+					} else {
+						ball. setColliding(false);
+					}
+					
+					
+					scene.repaint();
 				}
-				if (!playerTwoHuman && Math.abs(ball.getX() - paddle2.getX()) < AI_SEARCH_DISTANCE) {
-					double target = ball.getY() - paddle2.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
-					paddle2.setBoundedY(target, paddle2.getHeight(), this.getTop(), this.getBot());
-				}
-				
-				Direction dir1 = paddle2.isColliding(ball);
-				Direction dir2 = paddle1.isColliding(ball);
-				Direction dir3 = topWall.isColliding(ball);
-				Direction dir4 = botWall.isColliding(ball);
-				if (dir1 != Direction.NONE){
-					if (ball.getColliding() == false) ball.flipDirection(dir1);
-				} else if (dir2 != Direction.NONE){
-					if (ball.getColliding() == false) ball.flipDirection(dir2);
-				} else if (dir3 != Direction.NONE){
-					if (ball.getColliding() == false) ball.flipDirection(dir3);
-				} else if (dir4 != Direction.NONE){
-					if (ball.getColliding() == false) ball.flipDirection(dir4);
-				}
-
-				if (dir1 != Direction.NONE || dir2 != Direction.NONE || dir3 != Direction.NONE || dir4 != Direction.NONE) {
-					ball.setColliding(true);
-				} else {
-					ball. setColliding(false);
-				}
-				
-				scene.repaint();
 
 				Thread.sleep(Constants.THREAD_DELAY);
 			}
@@ -159,6 +187,7 @@ public class RunnableGame implements Runnable{
 	}
 	
 	public void pause(boolean b){
+		this.paused = b;
 		if (b) {
 			ball.pause();
 			paddle1.pause();
@@ -192,6 +221,14 @@ public class RunnableGame implements Runnable{
 		botWall.setWidth(scene.getWidth());
 		botWall.setY(scene.getHeight() - botWall.getHeight());
 		botWall.setHeight(botWall.getHeight());
+		leftWall.setX(scene.getX() - GOAL_WALL_THICKNESS);
+		leftWall.setWidth(GOAL_WALL_THICKNESS);
+		leftWall.setY(scene.getX() + topWall.getHeight());
+		leftWall.setHeight(scene.getHeight() - topWall.getHeight() - botWall.getHeight());
+		rightWall.setX(scene.getWidth());
+		rightWall.setWidth(GOAL_WALL_THICKNESS);
+		rightWall.setY(scene.getX() + topWall.getHeight());
+		rightWall.setHeight(scene.getHeight() - topWall.getHeight() - botWall.getHeight());
 		
 		ball.setTop(getTop() - 1); // allows for collision with wall
 		ball.setBot(getBot() + 1); // allows for collision with wall

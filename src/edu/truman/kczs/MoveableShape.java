@@ -91,6 +91,8 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 			dx *= -1;
 			dy *= -1;
 		}
+		
+		if (Constants.SPEED_INCREMENT_ENABLED) speed += Constants.SPEED_INCREMENT;
 	}
 	
 	public void pause() {
