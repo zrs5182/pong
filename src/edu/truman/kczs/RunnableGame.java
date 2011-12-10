@@ -19,7 +19,7 @@ import javax.swing.Timer;
 
 public class RunnableGame implements Runnable{
 	public static final int WALL_THICKNESS_DEFAULT = 20;
-	public static final int PADDLE_HEIGHT_DEFAULT = 120;//150;
+	public static final int PADDLE_HEIGHT_DEFAULT = 100;//150;
 	public static final int PADDLE_DIFFUCULTY_CHANGE = 50;
 	public static final Color BACKGROUND_DEFAULT = Color.black;
 	public static final Color LINE_COLOR_DEFAULT = Color.gray;
@@ -121,6 +121,18 @@ public class RunnableGame implements Runnable{
 				System.out.println("Ball Thread Exception");
 			}
 
+		}
+	}
+	
+	public void pause(boolean b){
+		if (b) {
+			ball.pause();
+			paddle1.pause();
+			paddle2.pause();
+		} else {
+			ball.unpause();
+			paddle1.unpause();
+			paddle2.unpause();
 		}
 	}
 }

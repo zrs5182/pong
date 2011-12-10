@@ -24,38 +24,55 @@ public class KCZS {
 	public static final int WIN_WIDTH = 900;
 	public static final int WIN_HEIGHT = 760;
 	private static Thread gameThread;
-   /**
-    * @param args
-    */
-   public static void main(String[] args) {
-	   JFrame frame = new JFrame();
-	   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	   final SceneComponent scene = new SceneComponent();
-	   final PlayerPanel player1Options = new PlayerPanel(1);
-	   final PlayerPanel player2Options = new PlayerPanel(2);
-	   JButton startButton = new JButton("New Game");
-	   JPanel optionsPanel = new JPanel();
-	   optionsPanel.add(player1Options, BorderLayout.WEST);
-	   optionsPanel.add(startButton, BorderLayout.CENTER);
-	   optionsPanel.add(player2Options, BorderLayout.EAST);
-	   frame.add(optionsPanel, BorderLayout.SOUTH);
-	   frame.add(scene, BorderLayout.CENTER);
-	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
-	   frame.setVisible(true);
-	   
-	   RunnableGame game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
-	   gameThread = new Thread(game);
-	   gameThread.start();
-	   
-	   startButton.addActionListener(new
-			   ActionListener() {
-			    public void actionPerformed(ActionEvent event) {
-			    	gameThread.interrupt();
-					   RunnableGame game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
-					   gameThread = new Thread(game);
-					   gameThread.start();
-			    }
-			  });
-   }
+	private static boolean paused = false;
+	private static RunnableGame game;
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		final SceneComponent scene = new SceneComponent();
+		final PlayerPanel player1Options = new PlayerPanel(1);
+		final PlayerPanel player2Options = new PlayerPanel(2);
+		JButton startButton = new JButton("New Game");
+		JButton pauseButton = new JButton("Pause Game");
+		JPanel optionsPanel = new JPanel();
+		optionsPanel.add(player1Options, BorderLayout.WEST);
+		optionsPanel.add(startButton, BorderLayout.CENTER);
+		optionsPanel.add(pauseButton, BorderLayout.CENTER);
+		optionsPanel.add(player2Options, BorderLayout.EAST);
+		frame.add(optionsPanel, BorderLayout.SOUTH);
+		frame.add(scene, BorderLayout.CENTER);
+		frame.setSize(WIN_WIDTH, WIN_HEIGHT);
+		frame.setVisible(true);
+
+		game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+		gameThread = new Thread(game);
+		gameThread.start();
+
+		startButton.addActionListener(new
+				ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				paused = false; // unpause a game if making a new one
+				gameThread.interrupt();
+				game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+				gameThread = new Thread(game);
+				gameThread.start();
+			}
+		});
+		
+		pauseButton.addActionListener(new
+				ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				paused = !paused;
+				game.pause(paused);
+			}
+		});
+	}
+
+	public boolean getPaused(){
+		return paused;
+	}
 
 }
