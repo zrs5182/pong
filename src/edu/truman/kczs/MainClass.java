@@ -26,7 +26,9 @@ public class MainClass {
 	private static RunnableGame game;
 	private static JFrame frame;
 	private static SceneComponent oldScene;
-
+	private static ScorePanel score1;
+	private static ScorePanel score2;
+	
 	public MainClass(){
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,4 +98,8 @@ public class MainClass {
 		frame.add(scene, BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
+	public static void setScoreColors(Color player1Color, Color player2Color){
+		score1.setColor(player1Color);
+		score2.setColor(player2Color);
+	};
 }
