@@ -5,6 +5,7 @@ package edu.truman.kczs;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JLabel;
@@ -20,21 +21,33 @@ import javax.swing.border.BevelBorder;
 public class ScorePanel extends JPanel {
 	private int playerScore;
 	private JLabel scoreLabel;
-	public ScorePanel(Color color)
+	private Color color;
+	private Font font;
+	public ScorePanel(Color color, Font font)
 	{
+		this.font = font;
+		this.color = color;
 		scoreLabel = new JLabel(Integer.toString(playerScore));
 		scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		scoreLabel.setBackground(color);
+		scoreLabel.setFont(this.font);
+		scoreLabel.setForeground(this.color);
+		scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
+		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		setBorder(new BevelBorder(BevelBorder.RAISED));
 		setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(scoreLabel);
+
 	}
 	
 	public void setScore(int score){
 	playerScore = score;
-	this.remove(scoreLabel);
+	remove(scoreLabel);
 	scoreLabel = new JLabel(Integer.toString(playerScore));
-	this.add(scoreLabel);
+	scoreLabel.setFont(font);
+	scoreLabel.setForeground(color);
+	scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
+	scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
+	add(scoreLabel);
 	}
 	
 	public void paintComponent(Graphics g){

@@ -3,6 +3,8 @@
  */
 package edu.truman.kczs;
 
+import java.awt.Color;
+
 /**
  * @author Kyler Carlson
  * @author Zach Schwartz
@@ -11,10 +13,11 @@ package edu.truman.kczs;
 public class Player {
    private String name;
    private int score;
-   private Paddle paddle;
+   private Color color;
    
-   public Player(String name, int paddleX, int paddleY, int paddleW, int paddleH){
+   public Player(String name, Color color){
       this.name = name;
+      this.color = color;
    }
 
    public void addPoint(){
@@ -25,20 +28,11 @@ public class Player {
       return score;
    }
    
-   public void moveUp(){
-      paddle.translate();
-   }
-   
-   public void moveDown(){
-      paddle.translate();
+   public Color getColor(){
+	   return color;
    }
    
    public String toString(){
       return name;
    }
-   
-   public double getPaddleX(){
-	   return paddle.getX();
-   }
-   
 }
