@@ -91,6 +91,7 @@ public class RunnableGame implements Runnable{
 		ballThread = new Thread(ball);
 		paddle1Thread = new Thread(paddle1);
 		paddle2Thread = new Thread(paddle2);
+		
 
 		ballThread.start();
 		paddle1Thread.start();

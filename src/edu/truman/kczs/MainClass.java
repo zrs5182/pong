@@ -36,9 +36,9 @@ public class MainClass {
 		final PlayerPanel player2Options = new PlayerPanel(2);
 
 		Font font = new Font("Serif", 0, 120);
-		ScorePanel score1 = new ScorePanel(Color.RED, font);
+		score1 = new ScorePanel(Color.RED, font);
 		score1.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-		ScorePanel score2 = new ScorePanel(Color.BLUE, font);
+		score2 = new ScorePanel(Color.BLUE, font);
 		
 		JButton startButton = new JButton("New Game");
 		JButton pauseButton = new JButton("Pause Game");
@@ -81,6 +81,7 @@ public class MainClass {
 				gameThread.interrupt();
 				game = new RunnableGame(player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
 				gameThread = new Thread(game);
+				MainClass.setScoreColors(player1Options.getColor(), player2Options.getColor());
 				gameThread.start();
 			}
 		});
@@ -99,7 +100,7 @@ public class MainClass {
 		frame.setVisible(true);
 	}
 	public static void setScoreColors(Color player1Color, Color player2Color){
-		score1.setColor(player1Color);
-		score2.setColor(player2Color);
+		score1.setColor(Color.GREEN);
+		//score2.setColor(player2Color);
 	};
 }
