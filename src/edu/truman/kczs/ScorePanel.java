@@ -50,6 +50,10 @@ public class ScorePanel extends JPanel {
 	add(scoreLabel);
 	}
 	
+	public void setColor(Color newColor){
+		color = newColor;
+	}
+	
 	public void paintComponent(Graphics g){
 		
 		scoreLabel.repaint();
