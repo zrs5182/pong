@@ -18,17 +18,16 @@ import edu.truman.kczs.Wall;
 import javax.swing.Timer;
 
 public class RunnableGame implements Runnable{
-	public static final int WALL_THICKNESS = 20;
-	public static final int PADDLE_HEIGHT = 520;//150;
-	public static final Color BACKGROUND = Color.black;
-	public static final Color LINE_COLOR = Color.gray;
-	public static final Color WALL_COLOR = Color.white;
-	public static final Color PADDLE1_COLOR = Color.red;
-	public static final Color PADDLE2_COLOR = Color.blue;
-	public static final Color BALL_COLOR = Color.green;
-	public static final double PADDLE_INIT_SPEED = 0.0;
+	public static final int WALL_THICKNESS_DEFAULT = 20;
+	public static final int PADDLE_HEIGHT_DEFAULT = 120;//150;
+	public static final int PADDLE_DIFFUCULTY_CHANGE = 50;
+	public static final Color BACKGROUND_DEFAULT = Color.black;
+	public static final Color LINE_COLOR_DEFAULT = Color.gray;
+	public static final Color WALL_COLOR_DEFAULT = Color.white;
+	public static final Color BALL_COLOR_DEFAULT = Color.green;
+	public static final double PADDLE_INIT_SPEED_DEFAULT = 0.0;
 
-	public static final double BALL_SPEED = 3.0; //will change
+	public static final double BALL_SPEED_DEFAULT = 1.0; //will change
 
 	private final SceneComponent scene;
 	private final Field field;
@@ -39,17 +38,38 @@ public class RunnableGame implements Runnable{
 	private final RunnablePaddle paddle1;
 	private final RunnablePaddle paddle2;
 	private final RunnableBall ball;
+	
+	private Color playerOneColor;
+	private boolean playerOneHuman;
+	private SkillLevel playerOneSkill;
+	private int playerOnePaddleHeight = PADDLE_HEIGHT_DEFAULT;
+	private Color playerTwoColor;
+	private boolean playerTwoHuman;
+	private SkillLevel playerTwoSkill;
+	private int playerTwoPaddleHeight = PADDLE_HEIGHT_DEFAULT;
 
-	public RunnableGame(SceneComponent scene){
+	public RunnableGame(SceneComponent scene, boolean p1Hum, SkillLevel p1Skill, Color p1Col, boolean p2Hum, SkillLevel p2Skill, Color p2Col){
 		this.scene = scene;
-		field = new Field(scene, BACKGROUND, LINE_COLOR, WALL_THICKNESS);
-		leftWall = new GoalWall(0, 0+WALL_THICKNESS, WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS*2);
-		rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS, 0+WALL_THICKNESS, WALL_THICKNESS, scene.getHeight() - WALL_THICKNESS*2);
-		topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS, WALL_COLOR);
-		botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS, scene.getWidth() ,WALL_THICKNESS, WALL_COLOR);
-		paddle1 = new RunnablePaddle(0,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE1_COLOR, PADDLE_INIT_SPEED, 0.0, 0.0);
-		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS,(scene.getHeight()-PADDLE_HEIGHT) / 2 ,WALL_THICKNESS, PADDLE_HEIGHT, PADDLE2_COLOR, PADDLE_INIT_SPEED, 0.0, 0.0);
-		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS)/2, (scene.getHeight()-WALL_THICKNESS)/2, WALL_THICKNESS, WALL_THICKNESS, BALL_COLOR, BALL_SPEED, 1.0, 0.5);
+		this.playerOneColor = p1Col;
+		this.playerTwoColor = p2Col;
+		if (p1Skill == SkillLevel.BEGINNER) {
+			playerOnePaddleHeight += PADDLE_DIFFUCULTY_CHANGE;
+		} else if (p1Skill == SkillLevel.EXPERT) {
+			playerOnePaddleHeight -= PADDLE_DIFFUCULTY_CHANGE;
+		}
+		if (p2Skill == SkillLevel.BEGINNER) {
+			playerTwoPaddleHeight += PADDLE_DIFFUCULTY_CHANGE;
+		} else if (p2Skill == SkillLevel.EXPERT) {
+			playerTwoPaddleHeight -= PADDLE_DIFFUCULTY_CHANGE;
+		}
+		field = new Field(scene, BACKGROUND_DEFAULT, LINE_COLOR_DEFAULT, WALL_THICKNESS_DEFAULT);
+		leftWall = new GoalWall(0, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
+		rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS_DEFAULT, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
+		topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
+		botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS_DEFAULT, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
+		paddle1 = new RunnablePaddle(0,(scene.getHeight()-PADDLE_HEIGHT_DEFAULT) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0);
+		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-PADDLE_HEIGHT_DEFAULT) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0);
+		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, 1.0, 0.0);
 		Thread ballThread = new Thread(ball);
 		Thread paddle1Thread = new Thread(paddle1);
 		Thread paddle2Thread = new Thread(paddle2);

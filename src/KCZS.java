@@ -23,8 +23,7 @@ public class KCZS {
 
 	public static final int WIN_WIDTH = 900;
 	public static final int WIN_HEIGHT = 760;
-	
-	
+	private static Thread gameThread;
    /**
     * @param args
     */
@@ -44,10 +43,19 @@ public class KCZS {
 	   frame.setSize(WIN_WIDTH, WIN_HEIGHT);
 	   frame.setVisible(true);
 	   
-	   RunnableGame game = new RunnableGame(scene);
-	   Thread gameThread = new Thread(game);
-	   
+	   RunnableGame game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+	   gameThread = new Thread(game);
 	   gameThread.start();
+	   
+	   startButton.addActionListener(new
+			   ActionListener() {
+			    public void actionPerformed(ActionEvent event) {
+			    	gameThread.interrupt();
+					   RunnableGame game = new RunnableGame(scene, player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
+					   gameThread = new Thread(game);
+					   gameThread.start();
+			    }
+			  });
    }
 
 }
