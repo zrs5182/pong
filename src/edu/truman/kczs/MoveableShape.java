@@ -124,7 +124,7 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 			targetX = right - width;
 		}
 		
-		this.setY(targetX);
+		this.setX(targetX);
 	}
 	
 	/**
@@ -140,7 +140,22 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 		} else if (targetY + height > bottom) {
 			targetY = bottom - height;
 		}
-		
 		this.setY(targetY);
+	}
+	
+	public void setTop(double top){
+		this.top = top;
+	}
+	
+	public void setBot(double bot){
+		this.bot = bot;
+	}
+	
+	public void setLeft(double left){
+		this.left = left;
+	}
+	
+	public void setRight(double right){
+		this.right = right;
 	}
 }

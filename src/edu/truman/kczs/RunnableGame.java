@@ -58,6 +58,7 @@ public class RunnableGame implements Runnable{
 
 	public RunnableGame(boolean p1Hum, SkillLevel p1Skill, Color p1Col, boolean p2Hum, SkillLevel p2Skill, Color p2Col){
 		scene = new SceneComponent();
+		MainClass.addSceneComponent(scene);
 		this.playerOneColor = p1Col;
 		this.playerOneHuman = p1Hum;
 		this.playerOneSkill = p1Skill;
@@ -79,8 +80,8 @@ public class RunnableGame implements Runnable{
 		rightWall = new GoalWall(scene.getWidth()- WALL_THICKNESS_DEFAULT, 0+WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, scene.getHeight() - WALL_THICKNESS_DEFAULT*2);
 		topWall = new Wall(0, 0, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
 		botWall = new Wall(0, scene.getHeight() - WALL_THICKNESS_DEFAULT, scene.getWidth() ,WALL_THICKNESS_DEFAULT, WALL_COLOR_DEFAULT);
-		paddle1 = new RunnablePaddle(0,(scene.getHeight()-playerOnePaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), 0.0, WALL_THICKNESS_DEFAULT);
-		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-playerTwoPaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), this.getRight(), this.getRight() + WALL_THICKNESS_DEFAULT);
+		paddle1 = new RunnablePaddle(0,(scene.getHeight()-playerOnePaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerOnePaddleHeight, playerOneColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), getLeft(), WALL_THICKNESS_DEFAULT);
+		paddle2 = new RunnablePaddle(scene.getWidth()-WALL_THICKNESS_DEFAULT,(scene.getHeight()-playerTwoPaddleHeight) / 2 ,WALL_THICKNESS_DEFAULT, playerTwoPaddleHeight, playerTwoColor, PADDLE_INIT_SPEED_DEFAULT, 0.0, 1.0, this.getTop(), this.getBot(), this.getRight() - WALL_THICKNESS_DEFAULT, this.getRight());
 		ball = new RunnableBall((scene.getWidth()-WALL_THICKNESS_DEFAULT)/2, (scene.getHeight()-WALL_THICKNESS_DEFAULT)/2, WALL_THICKNESS_DEFAULT, WALL_THICKNESS_DEFAULT, BALL_COLOR_DEFAULT, BALL_SPEED_DEFAULT, 1.0, 0.5, this.getTop(), this.getBot(), this.getLeft(), this.getRight());
 		ballThread = new Thread(ball);
 		paddle1Thread = new Thread(paddle1);
@@ -110,8 +111,6 @@ public class RunnableGame implements Runnable{
 				resize();
 			}
 		});
-		
-		MainClass.addSceneComponent(scene);
 	}
 
 	public void run() {
@@ -120,11 +119,11 @@ public class RunnableGame implements Runnable{
 		while (true) {
 			try {
 				if (!playerOneHuman && Math.abs(ball.getX() - paddle1.getX()) < AI_SEARCH_DISTANCE) {
-					double target = ball.getY() - playerOnePaddleHeight / 2 + WALL_THICKNESS_DEFAULT/2;
+					double target = ball.getY() - paddle1.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
 					paddle1.setBoundedY(target, paddle1.getHeight(), this.getTop(), this.getBot());
 				}
 				if (!playerTwoHuman && Math.abs(ball.getX() - paddle2.getX()) < AI_SEARCH_DISTANCE) {
-					double target = ball.getY() - playerTwoPaddleHeight / 2 + WALL_THICKNESS_DEFAULT/2;
+					double target = ball.getY() - paddle2.getHeight() / 2 + WALL_THICKNESS_DEFAULT/2;
 					paddle2.setBoundedY(target, paddle2.getHeight(), this.getTop(), this.getBot());
 				}
 				
@@ -147,6 +146,7 @@ public class RunnableGame implements Runnable{
 				} else {
 					ball. setColliding(false);
 				}
+				
 				scene.repaint();
 
 				Thread.sleep(Constants.THREAD_DELAY);
@@ -183,12 +183,7 @@ public class RunnableGame implements Runnable{
 	}
 	
 	public void resize(){
-		ball.setX(scene.getWidth() / 2);
-		ball.setY(scene.getHeight() / 2);
-		paddle1.setX(0);
-		if (paddle1.getY() + paddle1.getHeight()> scene.getHeight() - botWall.getHeight()) paddle1.setY(scene.getHeight() - botWall.getHeight() - paddle1.getHeight());
-		paddle2.setX(scene.getWidth() - paddle2.getWidth());
-		if (paddle2.getY() + paddle2.getHeight()> scene.getHeight() - botWall.getHeight()) paddle2.setY(scene.getHeight() - botWall.getHeight() - paddle2.getHeight());
+		field.resize(scene.getWidth(), scene.getHeight());
 		topWall.setX(0);
 		topWall.setWidth(scene.getWidth());
 		topWall.setY(0);
@@ -197,22 +192,41 @@ public class RunnableGame implements Runnable{
 		botWall.setWidth(scene.getWidth());
 		botWall.setY(scene.getHeight() - botWall.getHeight());
 		botWall.setHeight(botWall.getHeight());
-		field.resize(scene.getWidth(), scene.getHeight());
+		
+		ball.setTop(getTop() - 1); // allows for collision with wall
+		ball.setBot(getBot() + 1); // allows for collision with wall
+		ball.setLeft(-1.0); // allows for collision with boundary
+		ball.setRight(getRight()+1); // allows for collision with boundary
+		paddle1.setTop(getTop());
+		paddle1.setBot(getBot());
+		paddle1.setLeft(getLeft());
+		paddle1.setRight(paddle1.getWidth());
+		paddle2.setTop(getTop());
+		paddle2.setBot(getBot());
+		paddle2.setLeft(getRight() - paddle2.getWidth());
+		paddle2.setRight(getRight());
+		
+		ball.setX(scene.getWidth() / 2);
+		ball.setY(scene.getHeight() / 2);
+		paddle1.setX(0);
+		if (paddle1.getY() + paddle1.getHeight()> scene.getHeight() - botWall.getHeight()) paddle1.setY(scene.getHeight() - botWall.getHeight() - paddle1.getHeight());
+		paddle2.setX(scene.getWidth() - paddle2.getWidth());
+		if (paddle2.getY() + paddle2.getHeight()> scene.getHeight() - botWall.getHeight()) paddle2.setY(scene.getHeight() - botWall.getHeight() - paddle2.getHeight());
 	}
 	
 	public double getTop() {
-		return topWall.getY() + topWall.getHeight();
+		return topWall.getHeight();
 	}
 	
 	public double getBot() {
-		return botWall.getY();
+		return field.getHeight() - botWall.getHeight();
 	}
 	
 	public double getLeft() {
-		return leftWall.getX() + leftWall.getWidth();
+		return 0;
 	}
 	
 	public double getRight() {
-		return rightWall.getX();
+		return field.getWidth();
 	}
 }

@@ -25,6 +25,7 @@ public class MainClass {
 	private static boolean paused = false;
 	private static RunnableGame game;
 	private static JFrame frame;
+	private static SceneComponent oldScene;
 
 	public MainClass(){
 		frame = new JFrame();
@@ -93,5 +94,6 @@ public class MainClass {
 
 	public static void addSceneComponent(SceneComponent scene) {
 		frame.add(scene, BorderLayout.CENTER);
+		frame.setVisible(true);
 	}
 }
