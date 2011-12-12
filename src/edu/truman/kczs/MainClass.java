@@ -2,6 +2,7 @@ package edu.truman.kczs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +29,7 @@ public class MainClass {
 	private static SceneComponent oldScene;
 	private static ScorePanel score1;
 	private static ScorePanel score2;
+   private static JPanel optionsPanel;
 	
 	public MainClass(){
 		frame = new JFrame();
@@ -42,7 +44,7 @@ public class MainClass {
 		
 		JButton startButton = new JButton("New Game");
 		JButton pauseButton = new JButton("Pause Game");
-		JPanel optionsPanel = new JPanel();
+		optionsPanel = new JPanel();
 		optionsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
@@ -100,7 +102,11 @@ public class MainClass {
 		frame.setVisible(true);
 	}
 	public static void setScoreColors(Color player1Color, Color player2Color){
-		score1.setColor(Color.GREEN);
-		//score2.setColor(player2Color);
+		score1.setColor(player1Color);
+		score2.setColor(player2Color);
+		frame.remove(optionsPanel);
+		frame.setVisible(true);
+		frame.add(optionsPanel, BorderLayout.SOUTH);
+		frame.setVisible(true);
 	};
 }

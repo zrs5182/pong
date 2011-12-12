@@ -55,14 +55,13 @@ public class ScorePanel extends JPanel {
 	public void setColor(Color newColor){
 		color = newColor;
 		remove(scoreLabel);
+		repaint();
 		scoreLabel = new JLabel(Integer.toString(6));
+	    scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
+	    scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		scoreLabel.setFont(font);
 		scoreLabel.setForeground(color);
-		scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
-		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		add(scoreLabel);
-		scoreLabel.repaint();
-		repaint();
 	}
 	
 	public void paintComponent(Graphics g){
