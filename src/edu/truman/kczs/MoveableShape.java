@@ -6,7 +6,8 @@ package edu.truman.kczs;
 import java.awt.Color;
 
 /**
- * @author kylercarlson
+ * Defines what a MoveableShape is
+ * @author Kyler Carlson
  *
  */
 public abstract class MoveableShape extends GameShape implements Moveable {

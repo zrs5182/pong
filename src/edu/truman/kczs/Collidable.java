@@ -4,6 +4,7 @@
 package edu.truman.kczs;
 
 /**
+ * This interface groups together objects that can collide into other objects
  * @author Kyler Carlson
  * @author Zach Schwartz
  *

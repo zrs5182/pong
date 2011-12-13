@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
+ * This class defines a Score Panel to display the player's score
  * @author Kyler Carlson
  * @author Zach Schwartz
  *
@@ -23,6 +24,13 @@ public class ScorePanel extends JPanel {
 	private Color backgroundColor;
 	private Color foregroundColor;
 	private Font font;
+	
+	/**
+	 * Constructor for a ScorePanel to keep track of and display a player's score
+	 * @param foregroundColor Color of objects in the foreground
+	 * @param backgroundColor Color of objects in the background
+	 * @param font Font in which the score will be displayed
+	 */
 	public ScorePanel(Color foregroundColor, Color backgroundColor, Font font)
 	{
 		this.font = font;
@@ -44,16 +52,29 @@ public class ScorePanel extends JPanel {
 
 	}
 	
+	/**
+	 * Sets the score on the score panel
+	 * @param score The new score to set for the player
+	 */
 	public void setScore(int score){
 		playerScore = score;
 		newLabel(foregroundColor, playerScore);	
 	}
 	
+	/**
+	 * Sets the color in which the player's score will be displayed
+	 * @param newColor The new color the score will be displayed in
+	 */
 	public void setColor(Color newColor){
 		foregroundColor = newColor;
 		newLabel(foregroundColor, playerScore);
 	}
 	
+	/**
+	 * Creates a new label that is updated with the score and color
+	 * @param newColor The color in which the new JLabel will display the score
+	 * @param score The score the new JLabel will display
+	 */
 	private void newLabel(Color newColor, int score)
 	{
 		playerScore = score;
@@ -68,11 +89,17 @@ public class ScorePanel extends JPanel {
 		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		add(scoreLabel);
 	}
-	
+	/**
+	 * Returns the current score of the player
+	 * @return The current score of the player
+	 */
 	public int getScore(){
 		return playerScore;
 	}
 	
+	/**
+	 * Defines how to paint this componenet onto the screen
+	 */
 	public void paintComponent(Graphics g){
 		
 		scoreLabel.repaint();

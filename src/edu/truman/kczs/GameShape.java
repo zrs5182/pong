@@ -8,7 +8,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
- * @author kylercarlson
+ * Defines shapes that will be involved in game play
+ * @author Kyler Carlson
+ * @author Zach Schwartz
  *
  */
 public abstract class GameShape implements Collidable, Drawable{
@@ -18,6 +20,14 @@ public abstract class GameShape implements Collidable, Drawable{
    private int height;
    private Color color;
    
+   /**
+    * Constructs a GameShape object
+    * @param xPos The x-position of the game object
+    * @param yPos The y-position of the game object
+    * @param width The length in the x-direction of the game object
+    * @param height The length in the y-direction of the game object
+    * @param color The color of the game object
+    */
    public GameShape(double xPos, double yPos, int width, int height, Color color){
       this.xPos = xPos;
       this.yPos = yPos;
@@ -26,41 +36,66 @@ public abstract class GameShape implements Collidable, Drawable{
       this.color = color;
    }
    
+/**
+ * Returns the x-position
+ * @return The x-position
+ */
    public double getX() {
-      // TODO Auto-generated method stub
       return xPos;
    }
 
+   /**
+    * Returns the y-position
+    * @return The y-position
+    */
    public double getY() {
-      // TODO Auto-generated method stub
       return yPos;
    }
 
+   /**
+    * Returns the length in the x-direction
+    * @return the length in the x-direction
+    */
    public int getWidth() {
-      // TODO Auto-generated method stub
-      return width;
+	   return width;
    }
 
+   /**
+    * Returns the length in the y-direction
+    * @return the length in the y-direction
+    */
    public int getHeight() {
-      // TODO Auto-generated method stub
       return height;
    }
    
+   /**
+    * Returns the color
+    * @return The color of the GameShape
+    */
    public Color getColor() {
       return color;
    }
    
+   /**
+    * Sets the color of a game shape
+    * @param color The color the game shape will be set to
+    */
    public void setColor(Color color) {
       this.color = color;
    }
    
+   /**
+    * Defines how the shape will be drawn
+    */
    public void draw(Graphics2D g2){
       Rectangle.Double rect = new Rectangle.Double(xPos, yPos, width, height);
       g2.setColor(color);
       g2.fill(rect);
       g2.draw(rect);
    }
-   
+   /**
+    * Determines what direction to objects are colliding in
+    */
    public Direction isColliding(Collidable obj) {
 	   boolean corner1 = false; // lower right
 	   boolean corner2 = false; // lower left
@@ -119,18 +154,34 @@ public abstract class GameShape implements Collidable, Drawable{
       return Direction.NONE;
    }
    
+   /**
+    * Sets the x-coordinate for the GameShape
+    * @param xPos The x-coordinate of the object
+    */
    public void setX(double xPos){
 	   this.xPos = xPos;
    }
    
+   /**
+    * Sets the y-coordinate for the GameShape
+    * @param yPos The y-coordinate of the object
+    */
    public void setY(double yPos){
 	   this.yPos = yPos;
    }
    
+   /**
+    *Sets the length in the x-direction of the GameShape 
+    * @param width The new length in the x-direction
+    */
    public void setWidth(int width){
 	   this.width = width;
    }
    
+   /**
+    * Sets the length in the y-direction of the GameShape
+    * @param height The new length in the y-direction
+    */
    public void setHeight(int height){
 	   this.height = height;
    }

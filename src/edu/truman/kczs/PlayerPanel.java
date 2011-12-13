@@ -11,15 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
-
 /**
  * 
  */
 
 /**
+ * This class creates a Player's Options Panel that includes: color, skill level, and player type
  * @author Kyler Carlson
  * @author Zach Schwartz
- * 
  */
 @SuppressWarnings("serial")
 public class PlayerPanel extends JPanel {
@@ -35,7 +34,13 @@ public class PlayerPanel extends JPanel {
 	private Color backgroundColor = Color.BLACK;
 	private Color foregroundColor = Color.WHITE;
 
-
+/**
+ * Constructs a Player Option's Panel
+ * @param playerNumber The number of the player being created
+ * @param foregroundColor The color of objects in the foreground of the panel
+ * @param backgroundColor The color of objects in the background of the panel
+ */
+	
 	public PlayerPanel(int playerNumber, Color foregroundColor, Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
 		this.foregroundColor = foregroundColor;
@@ -195,12 +200,19 @@ public class PlayerPanel extends JPanel {
 		
 		id++;
 	}
-
+	/**
+	 * Gets the current color selected from the Colors JComboBox
+	 * @return The current selected color from the JComboBox
+	 */
 	public Color getColor() {
 		int selectedIndex = colorList.getSelectedIndex();
 		return colors.get(selectedIndex);
 	}
 
+	/**
+	 * Determines if the currently selected player is a human player
+	 * @return Returns true if the human option is selected
+	 */
 	public boolean isHuman() {
 		if (playerHuman.isSelected()) {
 			return true;
@@ -209,6 +221,10 @@ public class PlayerPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Determines the skill level being used
+	 * @return Returns an enumerated type of SkillLevel based on the selected Skill Level
+	 */
 	public SkillLevel getSkillLevel() {
 		if (beginnerButton.isSelected()) {
 			return SkillLevel.BEGINNER;
@@ -219,10 +235,18 @@ public class PlayerPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Sets the background color of the components within the Player Panel
+	 * @param bgColor Color you wish to set the background to
+	 */
 	public void setBackgroundColor(Color bgColor){
 		backgroundColor = bgColor;
 	}
 	
+	/**
+	 * Sets the foreground color of the components within the Player Panel
+	 * @param fgColor
+	 */
 	public void setForegroundColor(Color fgColor){
 		foregroundColor = fgColor;
 	}

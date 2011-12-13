@@ -4,9 +4,9 @@
 package edu.truman.kczs;
 
 /**
+ * Groups together objects that are able to move
  * @author Kyler Carlson
  * @author Zach Schwartz
- *
  */
 public interface Moveable {
 	public double getSpeed();
