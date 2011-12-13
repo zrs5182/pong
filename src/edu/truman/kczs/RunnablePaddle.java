@@ -9,7 +9,7 @@ import java.awt.Color;
  */
 public class RunnablePaddle extends Paddle implements Runnable {
 	private boolean threadIsAlive = true;
-	
+
 	/**
 	 * Constructs a paddle that is runnable
 	 * @param xPos The top left x-coordinate for the paddle to be placed
@@ -42,13 +42,12 @@ public class RunnablePaddle extends Paddle implements Runnable {
 			catch (InterruptedException exception) {
 				System.out.println("Paddle Thread Interrupted");
 			}
-		
 		}
 
 	}
-	
+
 	/**
-	 * Kills the while loop running thread
+	 * will let the thread's while loop end
 	 */
 	public void end() {
 		threadIsAlive = false;

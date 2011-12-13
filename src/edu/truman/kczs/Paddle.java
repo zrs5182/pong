@@ -25,8 +25,7 @@ public class Paddle extends MoveableShape{
 	 * @param left The left side of the rectangle that defines the paddle
 	 * @param right The right side of the rectangle that defines the paddle
 	 */
-   public Paddle(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
-      super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
-   }
-
+	public Paddle(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
+		super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
+	}
 }

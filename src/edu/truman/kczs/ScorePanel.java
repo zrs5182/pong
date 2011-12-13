@@ -24,7 +24,7 @@ public class ScorePanel extends JPanel {
 	private Color backgroundColor;
 	private Color foregroundColor;
 	private Font font;
-	
+
 	/**
 	 * Constructor for a ScorePanel to keep track of and display a player's score
 	 * @param foregroundColor Color of objects in the foreground
@@ -51,7 +51,7 @@ public class ScorePanel extends JPanel {
 		this.add(scoreLabel);
 
 	}
-	
+
 	/**
 	 * Sets the score on the score panel
 	 * @param score The new score to set for the player
@@ -60,7 +60,7 @@ public class ScorePanel extends JPanel {
 		playerScore = score;
 		newLabel(foregroundColor, playerScore);	
 	}
-	
+
 	/**
 	 * Sets the color in which the player's score will be displayed
 	 * @param newColor The new color the score will be displayed in
@@ -69,7 +69,7 @@ public class ScorePanel extends JPanel {
 		foregroundColor = newColor;
 		newLabel(foregroundColor, playerScore);
 	}
-	
+
 	/**
 	 * Creates a new label that is updated with the score and color
 	 * @param newColor The color in which the new JLabel will display the score
@@ -89,19 +89,13 @@ public class ScorePanel extends JPanel {
 		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		add(scoreLabel);
 	}
-	/**
-	 * Returns the current score of the player
-	 * @return The current score of the player
-	 */
-	public int getScore(){
-		return playerScore;
-	}
-	
+
 	/**
 	 * Defines how to paint this component onto the screen
+	 * @param g the graphics object
 	 */
 	public void paintComponent(Graphics g){
-		
+
 		scoreLabel.repaint();
 	}
 }

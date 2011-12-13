@@ -19,9 +19,9 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	private double bot;
 	private double left;
 	private double right;
-	
-	
-	
+
+
+
 	/**
 	 * Defines construction for a MoveableShape Object
 	 * @param xPos The x-coordinate
@@ -32,10 +32,10 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	 * @param speed The speed the object moves at
 	 * @param dx The trajectory in the x-direction
 	 * @param dy The trajectory in the y-direction
-	 * @param top The top side of the rectangle
-	 * @param bot The bottom side of the rectangle
-	 * @param left The left side of the rectangle
-	 * @param right The right side of the rectangle
+	 * @param top The top side of the rectangle bounding legal translation
+	 * @param bot The bottom side of the rectangle bounding legal translation
+	 * @param left The left side of the rectangle bounding legal translation
+	 * @param right The right side of the rectangle bounding legal translation
 	 */
 	public MoveableShape(double xPos, double yPos, int width, int height,Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
 		super(xPos, yPos, width, height, color);
@@ -47,7 +47,7 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 		this.left = left;
 		this.right = right;
 	}
-	
+
 	/**
 	 * Returns the speed of the object as a double
 	 * @return The speed of the object
@@ -61,10 +61,10 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	 * @return The trajectory in the x-direction
 	 */
 	public double getDx() {
-		
+
 		return dx;
 	}
-	
+
 	/**
 	 * Returns the trajectory in the y-direction
 	 * @return The trajectory in the y-direction
@@ -81,21 +81,21 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	}
 
 	/**
- 	 * Sets the trajectory in the x-direction
+	 * Sets the trajectory in the x-direction
 	 */
 	public void setDx(double dx) {
 		this.dx = dx;
 	}
-	
+
 	/**
- 	 * Sets the trajectory in the y-direction
+	 * Sets the trajectory in the y-direction
 	 */	
 	public void setDy(double dy) {
 		this.dy = dy;
 	}
-	
+
 	/**
-	 * Moves the MoveableShape
+	 * Moves the MoveableShape using a legal bounding box
 	 */
 	public void translate(){
 		if (!paused){
@@ -103,7 +103,7 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 			this.setBoundedY(this.getY() +  dy * speed, this.getHeight(), top, bot);
 		}
 	}
-	
+
 	/**
 	 * Changes the direction of the MoveableShape
 	 * @param direction The direction of the object
@@ -118,25 +118,31 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 			dx *= -1;
 			dy *= -1;
 		}
-		
+
 		if (Constants.SPEED_INCREMENT_ENABLED) speed += Constants.SPEED_INCREMENT;
 	}
-	
+
 	/**
 	 * Stops the MoveableObject from moving
 	 */
 	public void pause() {
 		paused = true;
 	}
-	
+
 	/**
 	 * Resumes the MovealbeObject to moving
 	 */
 	public void unpause() {
 		paused = false;
 	}
-		
-	
+
+	/** 
+	 * @return paused if the object is paused
+	 */
+	public boolean getPaused() {
+		return paused;
+	}
+
 	/**
 	 * Will translate in the x-direction but not allow for the shape to leave boundaries
 	 * @param targetX the desired X
@@ -150,10 +156,10 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 		} else if (targetX + width > right) {
 			targetX = right - width;
 		}
-		
+
 		this.setX(targetX);
 	}
-	
+
 	/**
 	 * Will translate in the Y direction but not allow for the shape to leave boundaries
 	 * @param targetY the desired Y
@@ -169,36 +175,64 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 		}
 		this.setY(targetY);
 	}
-	
+
 	/**
-	 * Sets the top of the MoveableShape
+	 * Sets the top bounding legal area for translation of the MoveableShape
 	 * @param top The top of the MoveableShape
 	 */
 	public void setTop(double top){
 		this.top = top;
 	}
-	
+
 	/**
-	 * Sets the bottom of the MoveableShape
+	 * Sets the bottom bounding legal area for translation of the MoveableShape
 	 * @param bot The bottom of the MoveableShape
 	 */
 	public void setBot(double bot){
 		this.bot = bot;
 	}
-	
+
 	/**
-	 * Sets the left side of the MoveableShape
+	 * Sets the left bounding legal area for translation of the MoveableShape
 	 * @param left The left side of the MoveableShape
 	 */
 	public void setLeft(double left){
 		this.left = left;
 	}
-	
+
 	/**
-	 * Sets the right side of the MoveableShape
+	 * Sets the right bounding legal area for translation  of the MoveableShape
 	 * @param right The right side of the MoveableShape
 	 */
 	public void setRight(double right){
 		this.right = right;
+	}
+
+	/**
+	 * @return top of legal movement bounding box
+	 */
+	public double getTop(){
+		return top;
+	}
+
+	/**
+	 * @return bottom of legal movement bounding box
+	 */
+	public double getBot(){
+		return bot;
+	}
+
+	/**
+	 * @return left of legal movement bounding box
+	 */
+	public double getLeft(){
+		return left;
+	}
+
+	/**
+	 * @return right of legal movement bounding box
+	 */
+	public double getRight(){
+		return right;
 	}
 }

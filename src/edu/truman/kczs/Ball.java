@@ -28,7 +28,7 @@ public class Ball extends MoveableShape{
 	 * @param left The left bound of legal translation
 	 * @param right The right bound of legal translation
 	 */
-   public Ball(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
-      super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
-   }
+	public Ball(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
+		super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
+	}
 }

@@ -6,7 +6,7 @@ package edu.truman.kczs;
 import java.awt.Color;
 
 /**
- * Defines a wall
+ * Defines a wall of the game 
  * @author Kyler Carlson
  * @author Zach Schwartz
  *
@@ -21,6 +21,6 @@ public class Wall extends GameShape {
 	 * @param color The color of a wall
 	 */
 	public Wall(double xPos, double yPos, int width, int height, Color color){
-	      super(xPos, yPos, width, height, color);
-	   }
+		super(xPos, yPos, width, height, color);
+	}
 }

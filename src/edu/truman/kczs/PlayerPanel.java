@@ -34,17 +34,16 @@ public class PlayerPanel extends JPanel {
 	private Color backgroundColor = Color.BLACK;
 	private Color foregroundColor = Color.WHITE;
 
-/**
- * Constructs a Player Option's Panel
- * @param playerNumber The number of the player being created
- * @param foregroundColor The color of objects in the foreground of the panel
- * @param backgroundColor The color of objects in the background of the panel
- */
-	
+	/**
+	 * Constructs a Player Option's Panel
+	 * @param playerNumber The number of the player being created
+	 * @param foregroundColor The color of objects in the foreground of the panel
+	 * @param backgroundColor The color of objects in the background of the panel
+	 */
 	public PlayerPanel(int playerNumber, Color foregroundColor, Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
 		this.foregroundColor = foregroundColor;
-		
+
 		//makes panel opaque and sets the background color
 		setOpaque(true);
 		setBackground(backgroundColor);
@@ -53,11 +52,11 @@ public class PlayerPanel extends JPanel {
 		boolean isSelected = true;
 		if(id % 2 == 0)
 			isSelected = false;
-		
+
 		// Create the Radio Buttons
 		playerHuman = new JRadioButton("Human", isSelected);
 		playerComputer = new JRadioButton("Computer", !isSelected);
-	
+
 		//sets their background and foreground colors and makes them opaque
 		playerHuman.setOpaque(true);
 		playerHuman.setBackground(backgroundColor);
@@ -65,12 +64,12 @@ public class PlayerPanel extends JPanel {
 		playerComputer.setOpaque(true);
 		playerComputer.setBackground(backgroundColor);
 		playerComputer.setForeground(foregroundColor);
-		
+
 		// creates skill level buttons
 		beginnerButton = new JRadioButton("Beginner", true);
 		intermediateButton = new JRadioButton("Intermediate");
 		expertButton = new JRadioButton("Expert");
-		
+
 		// Sets the background and foreground colors and makes them opaque
 		beginnerButton.setOpaque(true);
 		intermediateButton.setOpaque(true);
@@ -107,15 +106,13 @@ public class PlayerPanel extends JPanel {
 		for (String color : colorNames) {
 			colorList.addItem(color);
 		}
-		
+
 		colorList.setSelectedIndex(id-1);
 
 		// Add buttons to player group
 		ButtonGroup playerTypeGroup = new ButtonGroup();
 		playerTypeGroup.add(playerHuman);
 		playerTypeGroup.add(playerComputer);
-
-		
 
 		// groups skill level buttons for player
 		ButtonGroup skillGroup = new ButtonGroup();
@@ -138,12 +135,12 @@ public class PlayerPanel extends JPanel {
 		skillMenu.setOpaque(true);
 		skillMenu.setBackground(backgroundColor);
 		skillMenu.setForeground(foregroundColor);
-		
+
 		//makes colorList opaque/bg/fg
 		colorList.setOpaque(true);
 		colorList.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
 		colorList.setForeground(Constants.DEFAULT_FOREGROUND_COLOR);
-		
+
 		// creates the panel for the drop box to go in for player
 		JPanel colorMenu = new JPanel();
 		title = new TitledBorder("Color");
@@ -156,33 +153,33 @@ public class PlayerPanel extends JPanel {
 		colorMenu.setOpaque(true);
 		colorMenu.setBackground(backgroundColor);
 		colorMenu.setForeground(foregroundColor);
-		
+
 		// Creates a panel for player type and adds buttons to a panel
-				JPanel typeMenu = new JPanel();
-				typeMenu.setLayout(new BoxLayout(typeMenu, BoxLayout.PAGE_AXIS));
-				title = new TitledBorder("Type");
-				title.setTitleColor(foregroundColor);
-				typeMenu.setBorder(title);
-				typeMenu.add(playerHuman);
-				typeMenu.add(playerComputer);
-				typeMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
-				
+		JPanel typeMenu = new JPanel();
+		typeMenu.setLayout(new BoxLayout(typeMenu, BoxLayout.PAGE_AXIS));
+		title = new TitledBorder("Type");
+		title.setTitleColor(foregroundColor);
+		typeMenu.setBorder(title);
+		typeMenu.add(playerHuman);
+		typeMenu.add(playerComputer);
+		typeMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 		//Sets typeMenu opaque/bg/fg
-				typeMenu.setOpaque(true);
-				typeMenu.setBackground(backgroundColor);
-				typeMenu.setForeground(foregroundColor);
-				
+		typeMenu.setOpaque(true);
+		typeMenu.setBackground(backgroundColor);
+		typeMenu.setForeground(foregroundColor);
+
 		//makes a panel to contain the color drop down box and the player types
-				JPanel playerStatus = new JPanel();
-				playerStatus.setLayout(new BoxLayout(playerStatus, BoxLayout.PAGE_AXIS));
-				playerStatus.add(typeMenu);
-				playerStatus.add(colorMenu);
-		
+		JPanel playerStatus = new JPanel();
+		playerStatus.setLayout(new BoxLayout(playerStatus, BoxLayout.PAGE_AXIS));
+		playerStatus.add(typeMenu);
+		playerStatus.add(colorMenu);
+
 		//sets the playerStatus opaque/bg/fg
-				playerStatus.setOpaque(true);
-				playerStatus.setBackground(backgroundColor);
-				playerStatus.setForeground(foregroundColor);
-				
+		playerStatus.setOpaque(true);
+		playerStatus.setBackground(backgroundColor);
+		playerStatus.setForeground(foregroundColor);
+
 		//adds the menu panels
 		title = new TitledBorder("Player " + playerNumber
 				+ " Options");
@@ -192,12 +189,12 @@ public class PlayerPanel extends JPanel {
 		add(playerStatus, BorderLayout.WEST);
 		add(skillMenu, BorderLayout.EAST);
 		setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		//sets entire panel opaque/bg/fg
 		setOpaque(true);
 		setBackground(backgroundColor);
 		setForeground(foregroundColor);
-		
+
 		id++;
 	}
 	/**
@@ -234,7 +231,7 @@ public class PlayerPanel extends JPanel {
 			return SkillLevel.EXPERT;
 		}
 	}
-	
+
 	/**
 	 * Sets the background color of the components within the Player Panel
 	 * @param bgColor Color you wish to set the background to
@@ -242,7 +239,7 @@ public class PlayerPanel extends JPanel {
 	public void setBackgroundColor(Color bgColor){
 		backgroundColor = bgColor;
 	}
-	
+
 	/**
 	 * Sets the foreground color of the components within the Player Panel
 	 * @param fgColor

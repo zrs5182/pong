@@ -35,9 +35,9 @@ public class RunnableBall extends Ball implements Runnable {
 		super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
 	}
 
-/**
- * Defines how a RunnableBall thread will behave
- */
+	/**
+	 * Defines how a RunnableBall thread will behave
+	 */
 	public void run() {
 		while (threadIsAlive) {
 			try {
@@ -50,7 +50,10 @@ public class RunnableBall extends Ball implements Runnable {
 
 		}
 	}
-	
+
+	/**
+	 * will let the thread's while loop end
+	 */
 	public void end() {
 		threadIsAlive = false;
 	}
