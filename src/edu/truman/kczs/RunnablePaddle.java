@@ -3,7 +3,8 @@ package edu.truman.kczs;
 import java.awt.Color;
 
 public class RunnablePaddle extends Paddle implements Runnable {
-
+	private boolean threadIsAlive = true;
+	
 	public RunnablePaddle(double xPos, double yPos, int width, int height,
 			Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
 		super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);
@@ -12,7 +13,7 @@ public class RunnablePaddle extends Paddle implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (threadIsAlive) {
 			try {
 				this.translate();
 				Thread.sleep(Constants.THREAD_DELAY);
@@ -23,6 +24,10 @@ public class RunnablePaddle extends Paddle implements Runnable {
 		
 		}
 
+	}
+	
+	public void end() {
+		threadIsAlive = false;
 	}
 
 }

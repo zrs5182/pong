@@ -97,7 +97,6 @@ public class MainClass {
 			public void actionPerformed(ActionEvent event) {
 				paused = false; // unpause a game if making a new one
 				game.end();
-				gameThread.interrupt();
 				game = new RunnableGame(player1Options.isHuman(), player1Options.getSkillLevel(), player1Options.getColor(), player2Options.isHuman(), player2Options.getSkillLevel(), player2Options.getColor());
 				gameThread = new Thread(game);
 				MainClass.setScoreColors(player1Options.getColor(), player2Options.getColor());
@@ -123,8 +122,11 @@ public class MainClass {
 		frame.setVisible(true);
 	}
 	public static void addSceneComponent(SceneComponent scene) {
+		if (oldScene != null) frame.remove(oldScene);
 		frame.add(scene, BorderLayout.CENTER);
+		frame.repaint();
 		frame.setVisible(true);
+		oldScene = scene;
 	}
 	public static void setScoreColors(Color player1Color, Color player2Color){
 		score1.setColor(player1Color);
