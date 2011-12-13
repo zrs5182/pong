@@ -34,16 +34,25 @@ public class MainClass {
 	public MainClass(){
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		final PlayerPanel player1Options = new PlayerPanel(1);
-		final PlayerPanel player2Options = new PlayerPanel(2);
+		final PlayerPanel player1Options = new PlayerPanel(1, Constants.DEFAULT_FOREGROUND_COLOR, Constants.DEFAULT_BACKGROUND_COLOR);
+		final PlayerPanel player2Options = new PlayerPanel(2, Constants.DEFAULT_FOREGROUND_COLOR, Constants.DEFAULT_BACKGROUND_COLOR);
 
 		Font font = new Font("Serif", 0, 120);
-		score1 = new ScorePanel(Color.RED, font);
+		score1 = new ScorePanel(Constants.DEFAULT_PLAYER_ONE_COLOR, Constants.DEFAULT_BACKGROUND_COLOR, font);
 		score1.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-		score2 = new ScorePanel(Color.BLUE, font);
+		score2 = new ScorePanel(Constants.DEFAULT_PLAYER_TWO_COLOR, Constants.DEFAULT_BACKGROUND_COLOR, font);
 		
 		JButton startButton = new JButton("New Game");
 		JButton pauseButton = new JButton("Pause Game");
+		
+		//makes JButtons opaque/bg/fg
+		startButton.setOpaque(true);
+		startButton.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
+		startButton.setForeground(Constants.DEFAULT_FOREGROUND_COLOR);
+		pauseButton.setOpaque(true);
+		pauseButton.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
+		pauseButton.setForeground(Constants.DEFAULT_FOREGROUND_COLOR);
+		
 		optionsPanel = new JPanel();
 		optionsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -66,6 +75,11 @@ public class MainClass {
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 4;
 		optionsPanel.add(score2, c);
+		
+		//sets options panel opaque/bg/fg
+		optionsPanel.setBackground(Constants.DEFAULT_BACKGROUND_COLOR);
+		optionsPanel.setForeground(Constants.DEFAULT_FOREGROUND_COLOR);
+		
 		frame.add(optionsPanel, BorderLayout.SOUTH);
 
 		frame.setSize(WIN_WIDTH, WIN_HEIGHT);

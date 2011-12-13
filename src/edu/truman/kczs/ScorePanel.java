@@ -10,7 +10,6 @@ import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
 
 /**
  * @author Kyler Carlson
@@ -21,19 +20,25 @@ import javax.swing.border.EtchedBorder;
 public class ScorePanel extends JPanel {
 	private int playerScore;
 	private JLabel scoreLabel;
-	private Color color;
+	private Color backgroundColor;
+	private Color foregroundColor;
 	private Font font;
-	public ScorePanel(Color color, Font font)
+	public ScorePanel(Color foregroundColor, Color backgroundColor, Font font)
 	{
 		this.font = font;
-		this.color = color;
+		this.backgroundColor = backgroundColor;
+		this.foregroundColor = foregroundColor;
 		scoreLabel = new JLabel(Integer.toString(playerScore));
 		scoreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		scoreLabel.setFont(this.font);
-		scoreLabel.setForeground(color);
+		scoreLabel.setBackground(backgroundColor);
+		scoreLabel.setForeground(foregroundColor);
+		setBackground(backgroundColor);
+		setForeground(foregroundColor);
+		scoreLabel.setOpaque(true);
+		setOpaque(true);
 		scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
 		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
-		setBorder(new EtchedBorder());
 		setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(scoreLabel);
 
@@ -41,22 +46,24 @@ public class ScorePanel extends JPanel {
 	
 	public void setScore(int score){
 		playerScore = score;
-		newLabel(color, playerScore);	
+		newLabel(foregroundColor, playerScore);	
 	}
 	
 	public void setColor(Color newColor){
-		color = newColor;
-		newLabel(color, playerScore);
+		foregroundColor = newColor;
+		newLabel(foregroundColor, playerScore);
 	}
 	
 	private void newLabel(Color newColor, int score)
 	{
 		playerScore = score;
-		color = newColor;
+		foregroundColor = newColor;
 		remove(scoreLabel);
 		scoreLabel = new JLabel(Integer.toString(playerScore));
 		scoreLabel.setFont(font);
-		scoreLabel.setForeground(color);
+		scoreLabel.setBackground(backgroundColor);
+		scoreLabel.setForeground(foregroundColor);
+		setBackground(Color.BLACK);
 		scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
 		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		add(scoreLabel);
