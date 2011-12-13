@@ -4,6 +4,12 @@ import java.awt.event.KeyEvent;
 
 import java.awt.Color;
 
+/**
+ * Defines common constants the system uses
+ * @author Kyler Carlson
+ * @auhtor Zach Schwartz
+ *
+ */
 public abstract class Constants {
 	public static final int THREAD_DELAY = 5;
 	public static final boolean SPEED_INCREMENT_ENABLED = true;
