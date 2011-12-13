@@ -23,10 +23,10 @@ public class Ball extends MoveableShape{
 	 * @param speed The speed at which the ball will travel
 	 * @param dx The x-component of the ball's trajectory
 	 * @param dy The y-component of the ball's trajectory
-	 * @param top The top of the rectangle that defines the ball
-	 * @param bot The bottom of the rectangle that defines the ball
-	 * @param left The left side of the rectangle that defines the ball
-	 * @param right The right side of the rectangle that defines the ball
+	 * @param top The top of the rectangle that defines the ball's bounds
+	 * @param bot The bottom of the rectangle that defines the ball's bounds
+	 * @param left The left side of the rectangle that defines the ball's bounds
+	 * @param right The right side of the rectangle that defines the ball's bounds
 	 */
    public Ball(double xPos, double yPos, int width, int height, Color color, double speed, double dx, double dy, double top, double bot, double left, double right) {
       super(xPos, yPos, width, height, color, speed, dx, dy, top, top, left, right);

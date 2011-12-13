@@ -1,25 +1,21 @@
 package edu.truman.kczs;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import edu.truman.kczs.Ball;
 import edu.truman.kczs.Direction;
 import edu.truman.kczs.Field;
 import edu.truman.kczs.GoalWall;
-import edu.truman.kczs.Paddle;
-import edu.truman.kczs.PlayerPanel;
+
 import edu.truman.kczs.RunnableBall;
 import edu.truman.kczs.RunnablePaddle;
 import edu.truman.kczs.SceneComponent;
 import edu.truman.kczs.Wall;
 
-import javax.swing.Timer;
 
 public class RunnableGame implements Runnable{
 	private SceneComponent scene;
@@ -53,7 +49,6 @@ public class RunnableGame implements Runnable{
 	private int playerTwoAccelUpCount = 0;
 	private int playerTwoAccelDownCount = 0;
 	private boolean threadIsAlive = true;
-	
 
 	public RunnableGame(boolean p1Hum, SkillLevel p1Skill, Color p1Col, boolean p2Hum, SkillLevel p2Skill, Color p2Col){
 		scene = new SceneComponent();
@@ -180,6 +175,7 @@ public class RunnableGame implements Runnable{
 					
 					if ((p1Scored  && dir1 == Direction.NONE) || (p2Scored && dir2 == Direction.NONE)){
 						pause(true);
+						scene.repaint(); // updates field to show how close you were to hitting
 						ball.setSpeed(Constants.BALL_SPEED_DEFAULT); // removes any increase in speed from the last game
 						//increment the correct score
 						if (p1Scored) {
