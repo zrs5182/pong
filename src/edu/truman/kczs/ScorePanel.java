@@ -10,7 +10,6 @@ import java.awt.Graphics;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -41,27 +40,30 @@ public class ScorePanel extends JPanel {
 	}
 	
 	public void setScore(int score){
-	playerScore = score;
-	remove(scoreLabel);
-	scoreLabel = new JLabel(Integer.toString(playerScore));
-	scoreLabel.setFont(font);
-	scoreLabel.setForeground(color);
-	scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
-	scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
-	add(scoreLabel);
-	scoreLabel.repaint();
+		playerScore = score;
+		newLabel(color, playerScore);	
 	}
 	
 	public void setColor(Color newColor){
 		color = newColor;
+		newLabel(color, playerScore);
+	}
+	
+	private void newLabel(Color newColor, int score)
+	{
+		playerScore = score;
+		color = newColor;
 		remove(scoreLabel);
-		repaint();
-		scoreLabel = new JLabel(Integer.toString(6));
-	    scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
-	    scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
+		scoreLabel = new JLabel(Integer.toString(playerScore));
 		scoreLabel.setFont(font);
 		scoreLabel.setForeground(color);
+		scoreLabel.setAlignmentX(CENTER_ALIGNMENT);
+		scoreLabel.setAlignmentY(CENTER_ALIGNMENT);
 		add(scoreLabel);
+	}
+	
+	public int getScore(){
+		return playerScore;
 	}
 	
 	public void paintComponent(Graphics g){

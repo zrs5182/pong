@@ -97,6 +97,14 @@ public class MainClass {
 		});
 	}
 
+	private static void setScores(int player1Score, int player2Score){
+		score1.setScore(player1Score);
+		score2.setScore(player2Score);
+		frame.remove(optionsPanel);
+		frame.add(optionsPanel, BorderLayout.SOUTH);
+		frame.repaint();
+		frame.setVisible(true);
+	}
 	public static void addSceneComponent(SceneComponent scene) {
 		frame.add(scene, BorderLayout.CENTER);
 		frame.setVisible(true);
@@ -105,8 +113,15 @@ public class MainClass {
 		score1.setColor(player1Color);
 		score2.setColor(player2Color);
 		frame.remove(optionsPanel);
-		frame.setVisible(true);
 		frame.add(optionsPanel, BorderLayout.SOUTH);
+		frame.repaint();
 		frame.setVisible(true);
-	};
+	}
+	
+	public static void setPlayer1Score(int player1Score){
+		setScores(player1Score, score2.getScore());
+	}
+	public static void setPlayer2Score(int player2Score){
+		setScores(score1.getScore(), player2Score);
+	}
 }
