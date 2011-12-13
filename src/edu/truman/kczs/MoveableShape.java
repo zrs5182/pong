@@ -102,15 +102,7 @@ public abstract class MoveableShape extends GameShape implements Moveable {
 	public void unpause() {
 		paused = false;
 	}
-	
-	public void setColliding(boolean b){
-		colliding = b;
-	}
-	
-	public boolean getColliding(){
-		return colliding;
-	}
-	
+		
 	
 	/**
 	 * Will translate in the X direction but not allow for the shape to leave boundaries
