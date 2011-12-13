@@ -4,20 +4,17 @@
 package edu.truman.kczs;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
+ * Defines a 
  * @author Kyler Carlson
  * @author Zach Schwartz
  *
  */
+@SuppressWarnings("serial")
 public class StatusBar extends JPanel {
-	private int player1Score;
-	private int player2Score;
 	private JPanel player1Board;
 	private JPanel player2Board;
 	private JPanel optionsPanel;

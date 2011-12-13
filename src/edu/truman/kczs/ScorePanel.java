@@ -98,7 +98,7 @@ public class ScorePanel extends JPanel {
 	}
 	
 	/**
-	 * Defines how to paint this componenet onto the screen
+	 * Defines how to paint this component onto the screen
 	 */
 	public void paintComponent(Graphics g){
 		
