@@ -2,8 +2,10 @@
 
 <h2>Ported from SVN repo on Assembla</h2>
 
+<h3>Created to illustrate the use of Java Swing and Threading</h3>
+
 <p>
-This is a clone for the game pong. Controls are mapped as follows
+This is a clone of the game pong. Controls are mapped as follows
 </p>
 
 <p>
